@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Proto2CS": {
+      "commandName": "Project",
+      "workingDirectory": "../../Proto/"
+    }
+  }
+}

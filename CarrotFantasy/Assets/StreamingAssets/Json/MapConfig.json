@@ -1,0 +1,79 @@
+{
+  "unLockedNormalModelLevelList": [
+    {
+      "mTowerIDList": [ 1,2,3,4,5],
+      "mTowerIDListLength": 5,
+      "mTotalRound": 10
+    },
+    {
+      "mTowerIDList": [ 1, 2 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 9
+    },
+    {
+      "mTowerIDList": [ 1, 2 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 8
+    },
+    {
+      "mTowerIDList": [ 2, 3 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 10
+    },
+    {
+      "mTowerIDList": [ 1, 2, 3 ],
+      "mTowerIDListLength": 3,
+      "mTotalRound": 9
+    },
+    {
+      "mTowerIDList": [ 2, 3 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 8
+    },
+    {
+      "mTowerIDList": [ 1, 3 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 10
+    },
+    {
+      "mTowerIDList": [ 1, 3, 4 ],
+      "mTowerIDListLength": 3,
+      "mTotalRound": 9
+    },
+    {
+      "mTowerIDList": [ 1, 4 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 8
+    },
+    {
+      "mTowerIDList": [ 2, 4 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 10
+    },
+    {
+      "mTowerIDList": [ 3, 4 ],
+      "mTowerIDListLength": 2,
+      "mTotalRound": 9
+    },
+    {
+      "mTowerIDList": [ 1, 2, 5 ],
+      "mTowerIDListLength": 3,
+      "mTotalRound": 8
+    },
+    {
+      "mTowerIDList": [ 1, 4, 5 ],
+      "mTowerIDListLength": 3,
+      "mTotalRound": 7
+    },
+    {
+      "mTowerIDList": [ 1, 2, 3, 5 ],
+      "mTowerIDListLength": 3,
+      "mTotalRound": 10
+    },
+    {
+      "mTowerIDList": [ 1, 2, 3, 4, 5 ],
+      "mTowerIDListLength": 5,
+      "mTotalRound": 10
+    }
+  ]
+}

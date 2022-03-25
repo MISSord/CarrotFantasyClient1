@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ETModel
+{
+    public class BigLevelInfo
+    { 
+        public int bigLevel { get; set; }
+        public int count { get; set; }
+        public int unlockCount { get; set; }
+        public bool isLock { get; set; }
+    }
+}

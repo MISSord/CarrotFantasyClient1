@@ -1,0 +1,13 @@
+F:\bishe\CarrotFantasyClient1\Proto\Proto2CS.deps.json
+F:\bishe\CarrotFantasyClient1\Proto\Proto2CS.runtimeconfig.json
+F:\bishe\CarrotFantasyClient1\Proto\Proto2CS.runtimeconfig.dev.json
+F:\bishe\CarrotFantasyClient1\Proto\Proto2CS.dll
+F:\bishe\CarrotFantasyClient1\Proto\Proto2CS.pdb
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.csproj.AssemblyReference.cache
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.GeneratedMSBuildEditorConfig.editorconfig
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.AssemblyInfoInputs.cache
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.AssemblyInfo.cs
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.csproj.CoreCompileInputs.cache
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.dll
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.pdb
+F:\bishe\CarrotFantasyClient1\Tools\Proto2CS\obj\Release\Proto2CS.genruntimeconfig.cache

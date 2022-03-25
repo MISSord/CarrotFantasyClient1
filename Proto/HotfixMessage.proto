@@ -1,0 +1,265 @@
+syntax = "proto3";
+package ETModel;
+
+//测试向服务器发送消息
+message C2G_TestMessage  // IRequest
+{
+	int32 RpcId = 90;
+	string Info = 91;
+}
+//测试向服务器返回消息
+message G2C_TestMessage // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+//ET----
+message C2R_Login // IRequest
+{
+	int32 RpcId = 90;
+	string	Account	 = 1;	// 帐号
+	string	Password = 2;	// 密码
+}
+
+message R2C_Login // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string Address = 1;
+	int64 Key	    = 2;
+}
+
+message C2G_LoginGate // IRequest
+{
+	int32 RpcId = 90;
+	int64 Key = 1;	// 帐号
+}
+
+message G2C_LoginGate // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int64 PlayerId = 1;
+}
+
+message G2C_TestHotfixMessage // IMessage
+{
+	string Info = 1;
+}
+
+message C2M_TestActorRequest // IActorLocationRequest
+{
+	int32 RpcId = 90;
+	int64 ActorId = 91;
+	string Info = 1;
+}
+
+message M2C_TestActorResponse // IActorLocationResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string Info = 1;
+}
+
+message PlayerInfo // IMessage
+{
+	int32 RpcId = 90;
+}
+
+message C2G_PlayerInfo // IRequest
+{
+	int32 RpcId = 90;
+}
+
+message G2C_PlayerInfo // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	PlayerInfo PlayerInfo = 1;
+	repeated PlayerInfo PlayerInfos = 2;
+    repeated string TestRepeatedString = 3;
+    repeated int32 TestRepeatedInt32 = 4;
+    repeated int64 TestRepeatedInt64 = 5;
+}
+
+message C2G_LoginGate_Req  // IRequest
+{
+	int32 RpcId = 90;
+	int64 Key = 1;
+}
+
+message G2C_LoginGate_Back // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int64 UserID = 1;
+}
+
+//客户端登陆网关请求
+message A0003_LoginGate_C2G // IRequest
+{
+	int32 RpcId = 90;
+	int64 GateLoginKey = 1;
+}
+//客户端登陆网关返回
+message A0003_LoginGate_G2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int64 UserID = 1;
+}
+
+//客户端登陆认证请求
+message A0002_Login_C2R // IRequest
+{
+	int32 RpcId = 90;
+	string Account = 1; //假定的账号
+	string Password = 2; //假定的密码
+}
+//客户端登陆认证返回
+message A0002_Login_R2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string GateAddress = 1;
+	int64 GateLoginKey = 2;
+}
+
+//客户端注册请求
+message A0001_Register_C2R // IRequest
+{
+	int32 RpcId = 90;
+	string Account = 1; //假定的账号
+	string Password = 2; //假定的密码
+}
+
+//客户端注册请求回复
+message A0001_Register_R2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+//获取用户信息
+message A1001_GetUserInfo_C2G // IRequest
+{
+	int32 RpcId = 90;
+}
+
+//返回用户信息
+//RpcID,Error,Message是actor RPC消息固有的
+message A1001_GetUserInfo_G2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string UserName = 1;
+	string MapInfo = 2;
+}
+
+//设置用户信息
+message A1002_SetSingleMapInfo_C2G // IRequest
+{
+	int32 RpcId = 90;
+	int32 BigLevelId = 1;
+                int32 LevelId = 2;
+                int32 CarrotState = 3;
+                int32 IsAllClear = 4;
+                int32 UnLocked = 5;
+}
+
+//返回设置用户信息 //大小等级有可能为零
+message A1002_SetSingleMapInfo_G2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+                int32 BigLevelId = 1;
+                int32 LevelId = 2;
+                int32 UnLocked = 3;
+}
+
+//开始游戏前发送游戏信息
+message A1003_GameMapInfo_C2G // IRequest
+{
+	int32 RpcId = 90;
+	int32 BigLevelId = 1;
+                int32 LevelId = 2;
+}
+
+message A1003_GameMapInfo_G2C // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+
+//==>匹配玩家并进入游戏房间
+//玩家信息
+message GamerInfo
+{
+	int64 UserID = 1; //玩家ID
+}
+//返回大厅
+message C2G_ReturnLobby_Ntt // IMessage
+{
+	int32 RpcId = 90;
+}
+//匹配模块
+message C2G_StartMatch_Req // IRequest
+{
+	int32 RpcId = 90;
+}
+message G2C_StartMatch_Back // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+message Actor_LandMatcherPlusOne_NTT // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 93;
+	int32 MatchingNumber = 1; // 当前排队人数
+}
+message Actor_LandMatcherReduceOne_NTT // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 93;
+	int32 MatchingNumber = 1; // 当前排队人数
+}
+
+//进入房间(广播)
+message Actor_GamerEnterRoom_Ntt // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 93;
+    repeated GamerInfo Gamers = 1;
+}
+//退出房间(广播)
+message Actor_GamerExitRoom_Ntt // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 93;
+    int64 UserID = 1;
+}
+//匹配玩家并进入游戏房间 <==
+
+//准备游戏消息
+message Actor_GamerReady_Landlords // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 93;
+	int64 UserID = 1;
+}

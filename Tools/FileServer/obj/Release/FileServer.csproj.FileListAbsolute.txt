@@ -1,0 +1,16 @@
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\appsettings.json
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\Properties\launchSettings.json
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\FileServer.deps.json
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\FileServer.runtimeconfig.json
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\FileServer.runtimeconfig.dev.json
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\FileServer.dll
+D:\Users\taikr008\Desktop\Landlords_Client02_02\FileServer\FileServer.pdb
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.csproj.CoreCompileInputs.cache
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.RazorAssemblyInfo.cache
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.RazorAssemblyInfo.cs
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.AssemblyInfoInputs.cache
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.AssemblyInfo.cs
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.RazorTargetAssemblyInfo.cache
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.dll
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.pdb
+D:\Users\taikr008\Desktop\Landlords_Client02_02\Tools\FileServer\obj\Release\FileServer.genruntimeconfig.cache

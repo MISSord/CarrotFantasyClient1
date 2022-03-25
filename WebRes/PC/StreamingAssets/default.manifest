@@ -1,0 +1,68 @@
+ManifestFileVersion: 0
+CRC: 474962828
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 54ba2523b1026148fca3fb4db6eab1d6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 66658879407a62b6fe57acd9cec2636a
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 156049354
+  Script: {instanceID: 0}
+- Class: 483693784
+  Script: {instanceID: 0}
+- Class: 1839735485
+  Script: {instanceID: 0}
+Assets:
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_18.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/half_blue_spritesheet_0.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_11.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_0.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_19.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_16.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_1.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_7.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_26.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_12.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_23.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_21.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_5.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_9.asset
+- Packages/com.unity.2d.tilemap/Tests/Sprites/noextents.png
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_20.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_15.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_13.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_25.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_4.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_24.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_17.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_3.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_22.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_10.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_27_big.asset
+- Packages/com.unity.2d.tilemap/Tests/Palettes/Default.prefab
+- Packages/com.unity.2d.tilemap/Tests/Tiles/Prefab.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_8.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_14.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_6.asset
+- Packages/com.unity.2d.tilemap/Tests/Tiles/blue_spritesheet_2.asset
+- Packages/com.unity.2d.tilemap/Tests/Sprites/blue_spritesheet.png
+Dependencies: []
