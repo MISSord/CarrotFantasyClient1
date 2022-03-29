@@ -52,6 +52,9 @@ namespace ETModel
 
         private void restartGame()
         {
+            this.baseBattleView.dispose();
+            this.baseBattle.dispose();
+
 
         }
 

@@ -17,7 +17,7 @@ namespace ETModel
         protected Button grayButton;
         protected bool isClickGrayEnable; // 是否接受点击背景的按钮事件触发
 
-        private GameObject container;
+        public GameObject container { get; private set; }
 
         public PanelLayerType panelLayerType = PanelLayerType.Default;
         protected Transform transform;
@@ -93,8 +93,6 @@ namespace ETModel
         {
             int reason = PanelCloseReasonType.DEFAULT;
             Server.panelServer.closePanel(this.panelUid, reason);
-            this.panelManagerUnit.onDestroy();
-            GameObject.Destroy(this.container);
         }
 
         public virtual bool isCloseBySceneChange()

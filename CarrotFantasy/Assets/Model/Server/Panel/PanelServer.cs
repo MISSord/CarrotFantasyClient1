@@ -165,6 +165,8 @@ namespace ETModel
                     panelList.Remove(targetPanel);
                 }
                 panelDic.Remove(uid);
+                targetPanel.panelManagerUnit.onDestroy();
+                GameObject.Destroy(targetPanel.container);
             }
             else
             {

@@ -10,10 +10,8 @@ namespace ETModel
     public class BattleMapGrid
     {
         public int uid;
-
         public int x { get; private set; }
         public int y { get; private set; }
-
         public Fix64 realX { get; private set; }
         public Fix64 realY { get; private set; }
 
