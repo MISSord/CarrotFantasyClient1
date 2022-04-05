@@ -118,7 +118,6 @@ namespace ETModel
                     }
                 }
             }
-            Debug.Log("移动距离" + (float)this.distance);
         }
 
         public int getMonsterId(int monsterId)

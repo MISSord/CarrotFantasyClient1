@@ -22,5 +22,6 @@ namespace ETModel
         public const String TowerComponent = "TowerComponent";
         public const String MonsterComponent = "MonsterComponent";
         public const String BulletComponent = "BulletComponent";
+        public const String ItemComponent = "ItemComponent";
     }
 }

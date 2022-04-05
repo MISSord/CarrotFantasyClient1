@@ -17,6 +17,7 @@ namespace ETModel
         private bool isCanShowPanel = true;
         private TipUI tipPanel;
         private String tipPanelUrl = "Prefabs/Util/TipPanel";
+        private String loadingPanelUrl = "Prefabs/Util/LoadingPanel";
 
         private Dictionary<PanelLayerType, GameObject> curPanlInfo = new Dictionary<PanelLayerType, GameObject>();
 
@@ -48,6 +49,11 @@ namespace ETModel
             GameObject pan = GameObject.Instantiate(panel);
             pan.transform.SetParent(this.curPanlInfo[PanelLayerType.Tip].transform, false);
             this.tipPanel = new TipUI(pan);
+        }
+
+        private void addLoadingPanel()
+        {
+
         }
 
         public void showTip(String tip)

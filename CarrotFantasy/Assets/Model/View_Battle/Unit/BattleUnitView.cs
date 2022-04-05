@@ -117,11 +117,11 @@ namespace ETModel
 
         private void updateUnitScale()
         {
-            for (int i = 0; i <= this.componentList.Count - 1; i++)
-            {
+            //for (int i = 0; i <= this.componentList.Count - 1; i++)
+            //{
                 //this.componentList[i].setUnitScale(this.transformComponent.scale * this.unit.define.scale);
-            }
-            this.updateUnityScale();
+            //}
+            //this.updateUnityScale();
         }
 
         private void updateRotation()
@@ -201,11 +201,6 @@ namespace ETModel
             this.curViewFaceDirection = faceDirection;
         }
 
-        private void updateUnityScale()
-        {
-            this.transform.localScale = Vector3.one;
-        }
-
         public virtual void clearUnitInfo()
         {
             this.removeListener();
@@ -218,15 +213,15 @@ namespace ETModel
                 this.componentList[i].dispose();
                 GameViewObjectPool.getInstance().pushViewObjectToPool(this.componentList[i].componetType, this.componentList[i]); ;
             }
+            this.componentList.Clear();
+            this.componentDic.Clear();
+            this.transform = null;
         }
 
         public virtual void dispose()
         {
             this.clearUnitInfo();
-            this.componentList.Clear();
-            this.componentDic.Clear();
             this.battleView = null;
-            this.transform = null;
         }
     }
 }

@@ -11,5 +11,6 @@ namespace ETModel
         public const String Monster = "Monster";
         public const String Tower = "Tower";
         public const String Bullet = "Bullet";
+        public const String Item = "Item";
     }
 }

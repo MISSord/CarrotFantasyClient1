@@ -86,9 +86,11 @@ namespace ETModel
                 Debug.Log("移除防御塔视图出错");
                 return;
             }
+
             GameObject.Destroy(towerView.transform.gameObject);
             towerView.clearUnitInfo();
             tower.eventDipatcher.removeListener<BattleUnit_Tower>(BattleEvent.TOWER_LEVEL_UP, this.reloadTran);
+
             this.towerViewDic.Remove(tower);
             GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Tower, towerView);
             UIServer.getInstance().audioManager.playEffect("AudioClips/NormalMordel/Tower/TowerSell");
@@ -121,6 +123,7 @@ namespace ETModel
         {
             foreach (KeyValuePair<BattleUnit_Tower, BattleUnitView_Tower> info in this.towerViewDic)
             {
+                GameObject.Destroy(info.Value.transform.gameObject);
                 info.Value.clearUnitInfo();
                 info.Key.eventDipatcher.removeListener<BattleUnit_Tower>(BattleEvent.TOWER_LEVEL_UP, this.reloadTran);
                 GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Tower, info.Value);

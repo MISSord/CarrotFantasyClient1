@@ -19,6 +19,7 @@ namespace ETModel
             this.addComponent(new BattleDataComponent(this));
             this.addComponent(new BattleSimpleHitTestComponent(this));
             this.addComponent(new BattleMapComponent(this)); //依赖 data
+            this.addComponent(new BattleItemComponent(this));
             this.addComponent(new BattleTowerComponent(this)); //依赖map data
             this.addComponent(new BattleMonsterComponent(this));
             this.addComponent(new BattleBulletComponent(this));

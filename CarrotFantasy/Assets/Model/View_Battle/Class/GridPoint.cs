@@ -44,7 +44,6 @@ namespace ETModel
 
             BattleMapComponent map = (BattleMapComponent)(this.battleView.battle.getComponent(BattleComponentType.MapComponent));
             this.mapGrid = map.gridsList[x, y];
-            this.itemPrefabUrl = "Prefabs/Game/Item/" + map.levelInfo.bigLevelID + "/" + mapGrid.state.itemID.ToString();
             this.updateGrid();
         }
 
@@ -78,34 +77,11 @@ namespace ETModel
             if (this.mapGrid.state.canBuild)
             {
                 spriteRenderer.enabled = true;
-                if (this.mapGrid.state.hasItem)
-                {
-                    this.createItem();
-                }
             }
             else
             {
                 spriteRenderer.enabled = false;
             }
-        }
-
-        //创建物品
-        private void createItem()
-        {
-            GameObject itemGo = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject(this.itemPrefabUrl));
-            itemGo.transform.SetParent(transform);
-            itemGo.transform.GetChild(0).gameObject.SetActive(false);
-
-            Vector3 createPos = transform.position - new Vector3(0, 0, 3);
-            if (this.mapGrid.state.itemID <= 2)
-            {
-                createPos += new Vector3(BattleConfig.MAP_RATIO, -BattleConfig.MAP_RATIO) / 2;
-            }
-            else if (this.mapGrid.state.itemID <= 4)
-            {
-                createPos += new Vector3(BattleConfig.MAP_RATIO, 0) / 2;
-            }
-            itemGo.transform.position = createPos;
         }
 
         /// <summary>

@@ -35,8 +35,21 @@ namespace ETModel
             this.animator.runtimeAnimatorController = ResourceLoader.getInstance().loadRes<RuntimeAnimatorController>(
                 String.Format(this.animatorUrl, monster.curLevel, monster.monsterId));
             this.animator.Play(monster.monsterId.ToString());
+        }
 
+        public override void initListener()
+        {
+            base.initListener();
             this.unitEventDispatcher.addListener(BattleEvent.MONSTER_LIVE_REDUCE, this.updateLiveNumber);
+        }
+
+        public override void removeListener()
+        {
+            base.removeListener();
+            if (this.unitEventDispatcher != null)
+            {
+                this.unitEventDispatcher.removeListener(BattleEvent.MONSTER_LIVE_REDUCE, this.updateLiveNumber);
+            }
         }
 
         private void updateLiveNumber()
@@ -52,10 +65,6 @@ namespace ETModel
 
         public override void clearUnitInfo()
         {
-            if(this.unitEventDispatcher != null)
-            {
-                this.unitEventDispatcher.removeListener(BattleEvent.MONSTER_LIVE_REDUCE, this.updateLiveNumber);
-            }
             base.clearUnitInfo();
             this.slider = null;
             this.animator = null;

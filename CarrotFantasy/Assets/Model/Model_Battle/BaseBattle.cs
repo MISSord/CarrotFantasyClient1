@@ -109,7 +109,7 @@ namespace ETModel
         public virtual void startGame()
         {
             if (isStart == true) return;
-            isStart = false;
+            isStart = true;
             for (int i = 0; i < componentList.Count; i++)
             {
                 componentList[i].start();

@@ -31,6 +31,7 @@ namespace ETModel
             this.registerBattleUnitView(BattleUnitViewType.Monster);
             this.registerBattleUnitView(BattleUnitViewType.Bullet);
             this.registerBattleUnitView(BattleUnitViewType.Tower);
+            this.registerBattleUnitView(BattleUnitViewType.Item);
         }
 
         public void registerBattleUnitView(String name)
@@ -123,11 +124,6 @@ namespace ETModel
 
         public void pushViewObjectToPool(String name, BattleUnitView unit)
         {
-            if(unit.transform != null)
-            {
-                this.pushGameObjectToPool(name, unit.transform.gameObject);
-                unit.transform = null;
-            }
             List<BattleUnitView> curList = this.curObjectDic[name];
             curList.Add(unit);
             Debug.Log(String.Format("{0}放回到视图对象池，目前长度{1}", name, curList.Count));
@@ -168,7 +164,6 @@ namespace ETModel
             }
             this.curUnitObjectDic.Clear();
             this.curGameObjectDic.Clear();
-
             GC.Collect();
         }
     }

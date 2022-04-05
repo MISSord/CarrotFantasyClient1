@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{B9555A78-6328-1A1D-22F7-38F77EF7A20B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -141,6 +140,7 @@
     <Compile Include="Assets\Model\Model_Battle\Components\BattleBulletComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Components\BattleDataComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Components\BattleInputComponent.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Components\BattleItemComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Components\BattleLogComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Components\BattleMapComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Components\BattleMonsterComponent.cs" />
@@ -156,6 +156,7 @@
     <Compile Include="Assets\Model\Model_Battle\Components\Stat\BattleStatInfo.cs" />
     <Compile Include="Assets\Model\Model_Battle\Config\BattleConfig.cs" />
     <Compile Include="Assets\Model\Model_Battle\Config\BulletConfigReader.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Config\ItemConfigReader.cs" />
     <Compile Include="Assets\Model\Model_Battle\Config\MonsterConfigReader.cs" />
     <Compile Include="Assets\Model\Model_Battle\Config\TowerConfigReader.cs" />
     <Compile Include="Assets\Model\Model_Battle\Enum\BattleComponentType.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Assets\Model\Model_Battle\Result_verify\ModelBattleResultVerify.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit_Bullet.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit_Item.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit_Monster.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit_Tower.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnitProperty.cs" />
@@ -255,7 +257,8 @@
     <Compile Include="Assets\Model\View_Battle\Class\Carrot.cs" />
     <Compile Include="Assets\Model\View_Battle\Class\GridPoint.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BaseBattleViewComponent.cs" />
-    <Compile Include="Assets\Model\View_Battle\Components\BVBulletComponent.cs" />
+    <Compile Include="Assets\Model\View_Battle\Components\BVBullComponent.cs" />
+    <Compile Include="Assets\Model\View_Battle\Components\BVItemComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BVMapComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BVMonsterComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BVSceneComponent.cs" />
@@ -273,6 +276,7 @@
     <Compile Include="Assets\Model\View_Battle\Unit\BaseUnitViewComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView.cs" />
     <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView_Bullet.cs" />
+    <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView_Item.cs" />
     <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView_MapGrid.cs" />
     <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView_Monster.cs" />
     <Compile Include="Assets\Model\View_Battle\Unit\BattleUnitView_Tower.cs" />

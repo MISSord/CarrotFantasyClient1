@@ -55,7 +55,7 @@ namespace ETModel
             this.baseBattleView.dispose();
             this.baseBattle.dispose();
 
-
+            Sche.delayExeOnceTimes(this.startGame, 2.0f);
         }
 
         public void initBattle()

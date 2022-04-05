@@ -26,8 +26,7 @@ namespace ETModel
             this.rootGameObject = scene.registerGameContainer("BulletContainer");
 
             BattleDataComponent dataComponent = (BattleDataComponent)this.battle.getComponent(BattleComponentType.DataComponent);
-
-            for(int i = 0; i < dataComponent.towerIDListLength; i++)
+            for (int i = 0; i < dataComponent.towerIDListLength; i++)
             {
                 GameViewObjectPool.getInstance().registerGameObject(String.Format("{0}_1", dataComponent.curTowerIDList[i]));
                 GameViewObjectPool.getInstance().registerGameObject(String.Format("{0}_2", dataComponent.curTowerIDList[i]));
@@ -59,7 +58,7 @@ namespace ETModel
                     bulletView = new BattleUnitView_Bullet();
                 }
                 GameObject bulletNode = GameViewObjectPool.getInstance().getNewGameObject(String.Format("{0}_{1}", bullet.towerId, bullet.towerLevel + 1));
-                if(bulletNode == null)
+                if (bulletNode == null)
                 {
                     bulletNode = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject(String.Format(this.prefabUrl, bullet.towerId, bullet.towerLevel + 1)));
                 }
@@ -90,8 +89,7 @@ namespace ETModel
                 Debug.Log("移除子弹视图出错");
                 return;
             }
-            GameViewObjectPool.getInstance().pushGameObjectToPool(String.Format("{0}_{1}", bullet.towerId, bullet.towerLevel + 1),bulletView.transform.gameObject);
-            bulletView.transform = null;
+            GameViewObjectPool.getInstance().pushGameObjectToPool(String.Format("{0}_{1}", bullet.towerId, bullet.towerLevel + 1), bulletView.transform.gameObject);
             bulletView.clearUnitInfo();
             this.bulletDic.Remove(bullet);
             GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Bullet, bulletView);
@@ -101,17 +99,12 @@ namespace ETModel
         {
             foreach (KeyValuePair<BattleUnit_Bullet, BattleUnitView_Bullet> info in this.bulletDic)
             {
-                GameObject.Destroy(info.Value.transform.gameObject);
-                info.Value.transform = null;
+                GameViewObjectPool.getInstance().pushGameObjectToPool(String.Format("{0}_{1}", info.Key.towerId, info.Key.towerLevel + 1), info.Value.transform.gameObject);
+                info.Value.clearUnitInfo();
                 GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Bullet, info.Value);
             }
             this.bulletDic.Clear();
-        }
-
-        public override void dispose()
-        {
             this.removeListener();
-            base.dispose();
         }
     }
 }
