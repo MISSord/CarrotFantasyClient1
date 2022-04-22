@@ -11,7 +11,6 @@ namespace ETModel
     {
         public Fix64 towerAttackRadius { get; private set; }
         public int towerID { get; private set; }
-        public bool hasTarget { get; private set; }
 
         private Fix64 attackCD; //攻击CD
         private Fix64 timeVal;  //攻击时间计时
@@ -31,6 +30,7 @@ namespace ETModel
         private UnitTransformComponent unitTrans;
 
         private List<BattleUnit_Monster> monsterList;
+        public BattleUnit targetUnit { get; set; }
 
         public BattleUnit_Tower(BaseBattle battle) : base(battle)
         {
@@ -51,6 +51,7 @@ namespace ETModel
             this.isMaxLevel = false;
             this.curLevel = 0;
             this.towerAttackRadius = param["bodyRadius0"];
+            this.timeVal = Fix64.Zero;
         }
 
         public void loadInfo1(int x, int y)
@@ -86,7 +87,7 @@ namespace ETModel
 
         private void beHitCallBack(BattleUnit unit)
         {
-            if(unit.unitType.Equals(BattleUnitType.MONSTER) == false)
+            if (unit.unitType.Equals(BattleUnitType.MONSTER) == false)
             {
                 Debug.Log(String.Format("防御塔碰撞过程出错，被碰撞对象为{0}", unit.unitType));
                 return;
@@ -109,29 +110,50 @@ namespace ETModel
         public override void onTick(Fix64 deltaTime)
         {
             this.timeVal += deltaTime;
-            if(this.timeVal >= this.attackCD)
+            if (this.timeVal >= this.attackCD)
             {
-                if (this.monsterList.Count == 0) return;
-                this.eventDipatcher.dispatchEvent(BattleEvent.TOWER_ATTACK);
-                BattleUnit_Monster curMonster = this.monsterList[0];
-                for(int i = 0; i <= monsterList.Count - 1; i++)
+                BattleUnit targetOne = null;
+                if (this.targetUnit != null)
                 {
-                    if(curMonster.EndPointDistance >= this.monsterList[i].EndPointDistance)
+                    targetOne = this.targetUnit;
+                }
+                else
+                {
+                    if(this.monsterList.Count != 0)
                     {
-                        curMonster = this.monsterList[i];
+                        BattleUnit_Monster curMonster = this.monsterList[0];
+                        for (int i = 0; i <= monsterList.Count - 1; i++)
+                        {
+                            if (curMonster.EndPointDistance >= this.monsterList[i].EndPointDistance)
+                            {
+                                curMonster = this.monsterList[i];
+                            }
+                        }
+                        targetOne = curMonster;
                     }
                 }
-                Fix64Vector2 target = ((UnitTransformComponent)curMonster.getComponent(UnitComponentType.TRANSFORM)).getLastPosition();
-                this.baseBattle.eventDispatcher.dispatchEvent<BattleUnit_Tower, Fix64Vector2>(BattleEvent.BULLET_BUILD, this, target);
-                this.timeVal = Fix64.Zero;
+                if(targetOne != null)
+                {
+                    this.eventDipatcher.dispatchEvent<BattleUnit>(BattleEvent.TOWER_ATTACK, targetOne);
+                    this.baseBattle.eventDispatcher.dispatchEvent<BattleUnit_Tower, BattleUnit>(BattleEvent.BULLET_BUILD, this, targetOne);
+                    this.timeVal = Fix64.Zero;
+                }
             }
             this.monsterList.Clear();
+            this.targetUnit = null;
         }
 
         public override void ClearInfo()
         {
+            this.targetUnit = null;
             this.monsterList.Clear();
             base.ClearInfo();
+        }
+
+        public override void dispose()
+        {
+            this.ClearInfo();
+            base.dispose();
         }
     }
 }

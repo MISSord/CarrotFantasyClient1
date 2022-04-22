@@ -28,6 +28,8 @@ namespace ETModel
 
         private int schId_startGame;
 
+        private bool isInit;
+
         public NormalModelPanel(Dictionary<string, dynamic> param) : base(param)
         {
             this.prefabUrl = "Prefabs/Game/Panel/NormalModelPanel";
@@ -61,6 +63,11 @@ namespace ETModel
 
             this.btnMenuPage = this.transform.Find("node_TopPage/node_btn_container/Btn_Menu").GetComponent<Button>();
 
+            this.addListener();
+        }
+
+        private void initPages()
+        {
             this.topPage.init();
             this.menuPage.init();
             this.gameOverPage.init();
@@ -70,9 +77,6 @@ namespace ETModel
             this.nodeMenuPage.SetActive(false);
             this.nodeGameOverPage.SetActive(false);
             this.nodeGameWinPage.SetActive(false);
-
-            this.addListener();
-
         }
 
         private void showMenu()
@@ -96,6 +100,8 @@ namespace ETModel
 
         private void showStartUI()
         {
+            this.initPages();
+
             this.nodeStartUI.SetActive(true);
             BattleSchedulerComponent sche = (BattleSchedulerComponent)GameManager.getInstance().baseBattle.getComponent(BattleComponentType.SchedulerComponent);
             this.schId = sche.delayExeOnceTimes(()=> { 

@@ -18,11 +18,12 @@ namespace ETModel
         {
             this.itemConfigReader = new ItemConfigReader();
             this.itemConfigReader.init();
-            this.mapComponent = (BattleMapComponent)(this.baseBattle.getComponent(BattleComponentType.MapComponent));
+            this.componentType = BattleComponentType.ItemComponent;
         }
 
         public override void init()
         {
+            this.mapComponent = (BattleMapComponent)(this.baseBattle.getComponent(BattleComponentType.MapComponent));
             BattleDataComponent dataOne = (BattleDataComponent)this.baseBattle.getComponent(BattleComponentType.DataComponent);
             BattleMapGrid[,] gridsList = mapComponent.gridsList;
 
@@ -44,10 +45,12 @@ namespace ETModel
             BattleUnit_Item item = new BattleUnit_Item(this.baseBattle);
             item.eventDipatcher.addListener<BattleUnit_Item>(BattleEvent.ITEM_DIED, this.addDeadList);
             int itemId = this.mapComponent.levelInfo.bigLevelID * 100 + mapGrid.state.itemID;
-            item.loadInfo(this.baseBattle.getUid(), this.itemConfigReader.getSingleItemConfig(itemId), this.getPosition(mapGrid));
+            item.loadInfo(this.baseBattle.getUid(), this.itemConfigReader.getSingleItemConfig(itemId), this.getPosition(mapGrid), mapGrid.state.itemID);
             item.init();
             item.initComponents();
+            item.loadInfo1();
             this.battleItemList.Add(item);
+            this.eventDispatcher.dispatchEvent<String, BattleUnit>(BattleEvent.BATTLE_UNIT_ADD,BattleUnitType.ITEM, item);
         }
 
         private Fix64Vector2 getPosition(BattleMapGrid mapGrid)
@@ -99,15 +102,22 @@ namespace ETModel
             }
         }
 
-        public override void dispose()
+        public override void clearInfo()
         {
-            base.dispose();
+            base.clearInfo();
             this.deadItemList.Clear();
-            for(int i = 0; i <= this.battleItemList.Count - 1; i++)
+            for (int i = 0; i <= this.battleItemList.Count - 1; i++)
             {
                 this.battleItemList[i].eventDipatcher.removeListener<BattleUnit_Item>(BattleEvent.ITEM_DIED, this.addDeadList);
+                this.battleItemList[i].dispose();
             }
             this.battleItemList.Clear();
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
+            base.dispose();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace ETModel
             return this.sessionRealm.getMessageNumber(message);
         }
 
-        public void Dispose()
+        public void dispose()
         {
             this.sessionRealm.Dispose();
         }

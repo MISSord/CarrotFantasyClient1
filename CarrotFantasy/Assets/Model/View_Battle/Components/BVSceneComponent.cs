@@ -22,6 +22,7 @@ namespace ETModel
         {
             this.rootGameContainer = new GameObject("SceneContainer");
             this.rootGameContainer.transform.SetParent(this.battleView.rootGameObject.transform);
+            this.rootGameContainer.transform.SetAsFirstSibling();
             this.rootGameContainer.transform.position = Vector3.zero;
             this.rootGameContainer.transform.localScale = Vector3.one;
         }
@@ -38,13 +39,20 @@ namespace ETModel
             return container;
         }
 
-        public override void dispose()
+        public override void clearGameInfo()
         {
-            foreach(KeyValuePair<String, GameObject> info in containerDic)
+            base.clearGameInfo();
+            foreach (KeyValuePair<String, GameObject> info in containerDic)
             {
                 GameObject.Destroy(info.Value);
             }
             this.containerDic.Clear();
+            GameObject.Destroy(this.rootGameContainer);
+        }
+
+
+        public override void dispose()
+        {
             base.dispose();
         }
     }

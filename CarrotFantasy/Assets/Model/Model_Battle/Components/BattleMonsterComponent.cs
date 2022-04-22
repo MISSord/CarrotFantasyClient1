@@ -38,15 +38,15 @@ namespace ETModel
             this.curNoRegisterList = new List<BattleUnit_Monster>();
             this.curDeadMonsterList = new List<BattleUnit_Monster>();
             this.scheId = 0;
+
+            this.monsterConfigReader = new MonsterConfigReader();
+            this.monsterConfigReader.init();
         }
 
         public override void init()
         {
             this.levelInfo = BattleParamServer.getInstance().info;
             this.roundInfo = levelInfo.roundInfo;
-
-            this.monsterConfigReader = new MonsterConfigReader();
-            this.monsterConfigReader.init();
 
             this.battleDataComponent = (BattleDataComponent)this.baseBattle.getComponent(BattleComponentType.DataComponent);
             BattleMapComponent map = (BattleMapComponent)this.baseBattle.getComponent(BattleComponentType.MapComponent);
@@ -149,7 +149,6 @@ namespace ETModel
         {
             if (monster.isDead() == true)
             {
-                //Debug.Log("怪兽死亡");
                 this.eventDispatcher.dispatchEvent<String, BattleUnit>(BattleEvent.BATTLE_UNIT_REMOVE, BattleUnitType.MONSTER, monster);
                 this.baseBattle.eventDispatcher.dispatchEvent<int>(BattleEvent.COIN_CHANGE, 50);
                 //先从其他组件上除去，再从视图移除，最后再自己移除，确保顺序
@@ -201,6 +200,7 @@ namespace ETModel
             {
                 BattleSchedulerComponent sche = (BattleSchedulerComponent)this.baseBattle.getComponent(BattleComponentType.SchedulerComponent);
                 sche.silenceSingleSche(this.scheId);
+                this.scheId = 0;
             }
         }
 
@@ -224,6 +224,23 @@ namespace ETModel
                 return false;
             }
             return true;
+        }
+
+        public override void clearInfo()
+        {
+            base.clearInfo();
+            foreach(KeyValuePair<int, BattleUnit_Monster> info in this.curMonsterDic)
+            {
+                info.Value.ClearInfo();
+                GameObjectPool.getInstance().pushObjectToPool(BattleUnitType.MONSTER,info.Value);
+            }
+            for(int i = 0; i <= this.curNoRegisterList.Count - 1; i++)
+            {
+                this.curNoRegisterList[i].ClearInfo();
+                GameObjectPool.getInstance().pushObjectToPool(BattleUnitType.MONSTER, this.curNoRegisterList[i]);
+            }
+            this.curNoRegisterList.Clear();
+            this.curMonsterDic.Clear();
         }
 
         public override void dispose()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ETModel
 {
@@ -11,8 +12,10 @@ namespace ETModel
         private Dictionary<string, BaseServer> businessDic = new Dictionary<string, BaseServer>();
         private List<BaseServer> businessList = new List<BaseServer>();
 
-        public EventDispatcher eventDispatcher;
+        public EventDispatcher eventDispatcher { get; private set; }
         private static Business business;
+
+        public bool isGameQuit = false;
         public static Business getInstance()
         {
             if (business == null)
@@ -30,6 +33,8 @@ namespace ETModel
             this.businessDic.Add(BusinessType.MapServer, MapServer.getInstance());
             this.businessDic.Add(BusinessType.RoomServer, RoomServer.getInstance());
             this.businessDic.Add(BusinessType.BattleParamServer, BattleParamServer.getInstance());
+
+            this.eventDispatcher.addListener(CommonEventType.GAME_QUIT, this.dispose);
         }
 
         public void loadBusiness()
@@ -50,6 +55,8 @@ namespace ETModel
             }
         }
 
+
+
         public void dispose()
         {
             for(int i = this.businessList.Count - 1; i >= 0; i--)
@@ -58,6 +65,13 @@ namespace ETModel
                 this.businessList[i].dispose();
             }
             this.businessDic.Clear();
+            this.businessList.Clear();
+
+            Server.connectionServer.dispose();
+            Server.panelServer.dispose();
+            Server.sceneServer.dispose();
+
+            this.isGameQuit = true;
         }
     }
 }

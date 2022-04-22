@@ -15,6 +15,7 @@ namespace ETModel
         protected UnitTransformComponent unitTransform;
 
         private List<int> haveBeHit;
+        private bool isHaveDead = false;
 
         public int monsterId { get; private set; }
 
@@ -31,8 +32,8 @@ namespace ETModel
         public override void loadInfo(int uid, Dictionary<string, Fix64> param, Fix64Vector2 birthPosition)
         {
             base.loadInfo(uid, param, birthPosition);
-            this.curLive = (int)param["live"];
-            this.totalLive = (int)param["live"];
+            this.curLive = (int)this.birthParam["live"];
+            this.totalLive = (int)this.birthParam["live"];
         }
 
         public void loadInfo2(int curLevel, int monsterId)
@@ -73,11 +74,12 @@ namespace ETModel
         public override void initComponents()
         {
             base.initComponents();
-            this.unitTransform.setBodyRadius(new Fix64(0.2f));
+            this.unitTransform.setBodyRadius(this.birthParam["bodyRadius"]);
         }
 
         public void beHitCallBack(BattleUnit battleUnit)
         {
+            if (this.isHaveDead == true) return;
             if (battleUnit.unitType.Equals(BattleUnitType.BULLET))
             {
                 BattleUnit_Bullet bullet = (BattleUnit_Bullet)battleUnit;
@@ -90,6 +92,7 @@ namespace ETModel
                 this.eventDipatcher.dispatchEvent(BattleEvent.MONSTER_LIVE_REDUCE);
                 if (this.curLive <= 0)
                 {
+                    this.isHaveDead = true;
                     this.eventDipatcher.dispatchEvent<BattleUnit_Monster>(BattleEvent.MONSTER_DIED, this);
                     return;
                 }
@@ -125,6 +128,7 @@ namespace ETModel
             base.ClearInfo();
             this.curLevel = 0;
             this.monsterId = 0;
+            this.isHaveDead = false;
             this.haveBeHit.Clear();
         }
     }

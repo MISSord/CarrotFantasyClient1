@@ -15,9 +15,6 @@ namespace ETModel
         public EventDispatcher eventDispatcher;
 
         private bool isCanShowPanel = true;
-        private TipUI tipPanel;
-        private String tipPanelUrl = "Prefabs/Util/TipPanel";
-        private String loadingPanelUrl = "Prefabs/Util/LoadingPanel";
 
         private Dictionary<PanelLayerType, GameObject> curPanlInfo = new Dictionary<PanelLayerType, GameObject>();
 
@@ -40,35 +37,7 @@ namespace ETModel
         {
             this.reloadPanelLayerInfo();
             this.tryShowPreLoadPanel();
-            this.addTipPanel();
-        }
 
-        private void addTipPanel()
-        {
-            GameObject panel = ResourceLoader.getInstance().getGameObject(tipPanelUrl);
-            GameObject pan = GameObject.Instantiate(panel);
-            pan.transform.SetParent(this.curPanlInfo[PanelLayerType.Tip].transform, false);
-            this.tipPanel = new TipUI(pan);
-        }
-
-        private void addLoadingPanel()
-        {
-
-        }
-
-        public void showTip(String tip)
-        {
-            this.tipPanel.refreshTip(tip);
-        }
-
-        public void showTipLong(String tip)
-        {
-            this.tipPanel.showTip(tip);
-        }
-
-        public void fadeTipLong()
-        {
-            this.tipPanel.fadeTip();
         }
 
         private void tryShowPreLoadPanel()
@@ -199,6 +168,11 @@ namespace ETModel
                     this.panelList[i].finish();
                 }
             }
+        }
+
+        public void dispose()
+        {
+
         }
 
     }

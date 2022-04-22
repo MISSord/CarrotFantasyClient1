@@ -75,7 +75,7 @@ namespace ETModel
             if (accountText == null || accountText.Equals("") || passwordText == null || passwordText.Equals(""))
             {
                 //不能为空
-                Server.panelServer.showTip("账号或密码不能为空");
+                UIServer.getInstance().showTip("账号或密码不能为空");
                 return;
             }
             AccountServer.getInstance().loginAccount(accountText, passwordText);
@@ -101,13 +101,13 @@ namespace ETModel
             if (accountText == null || accountText.Equals("") || passwordText == null || passwordText.Equals("") || suerpasswordText == null || suerpasswordText.Equals(""))
             {
                 //不能为空
-                Server.panelServer.showTip("账号或密码不能为空");
+                UIServer.getInstance().showTip("账号或密码不能为空");
                 return;
             }
             if (!passwordText.Equals(suerpasswordText))
             {
                 //不能不一样
-                Server.panelServer.showTip("两次输入的密码不一样");
+                UIServer.getInstance().showTip("两次输入的密码不一样");
                 return;
             }
             AccountServer.getInstance().registerAccount(accountText, passwordText);

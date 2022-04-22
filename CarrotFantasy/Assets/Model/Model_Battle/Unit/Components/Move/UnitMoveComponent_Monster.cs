@@ -96,7 +96,16 @@ namespace ETModel
                 y += (deltaTime * this.speedY);
 
                 this.moveCurTime += deltaTime;
-                this.EndPointDistance -= this.moveSpeed;
+                Fix64 speed = this.speed;
+                if(speed >= Fix64.Zero)
+                {
+                    this.EndPointDistance -= this.speed;
+                }
+                else
+                {
+                    this.EndPointDistance += this.speed;
+                }
+                
                 this.unitTransform.setPosition(x, y, z);
                 if (this.moveCurTime >= this.moveTotalTime)
                 {
@@ -116,8 +125,6 @@ namespace ETModel
                     roadPointIndex++;
                     if (roadPointIndex >= monsterPointList.Count - 1)
                     {
-                        BattleDataComponent data =  (BattleDataComponent)this.unit.baseBattle.getComponent(BattleComponentType.DataComponent);
-                        data.eventDispatcher.dispatchEvent(BattleEvent.CARROT_LIVE_REDUCE);
                         this.isReachCarrot = true;
                         this.unit.baseBattle.eventDispatcher.dispatchEvent(BattleEvent.CARROT_LIVE_REDUCE);
                         this.unit.eventDipatcher.dispatchEvent<BattleUnit_Monster>(BattleEvent.MONSTER_DIED, (BattleUnit_Monster)this.unit);

@@ -37,8 +37,9 @@ namespace ETModel
         public const String SHOW_GAME_FINISH_PAGE = "Show_Game_Finish_Page";
         public const String SHOW_GAME_OVER_PAGE = "Show_Game_Over_Page";
 
-        public const String REPLAY_THE_GAME = "Replay_The_game";
-        public const String PAUSE_THE_GAME = "Pause_The_game";
+        public const String REPLAY_THE_GAME = "Replay_The_Game";
+        public const String PAUSE_THE_GAME = "Pause_The_Game";
+        public const String GO_ON_GAME = "Go_On_Game";
 
         public const String TOWER_LEVEL_UP = "Tower_Level_Up";
         public const String TOWER_ATTACK = "Tower_Attack";
@@ -51,5 +52,9 @@ namespace ETModel
 
         public const String ITEM_DIED = "Item_Died";
         public const String ITEM_LIVE_REDUCE = "Item_Live_Reduce";
+
+        public const String TARGET_CHANGE = "Target_Change";
+
+        public const String GAME_STATE_CHANGE = "Game_State_Change";
     }
 }

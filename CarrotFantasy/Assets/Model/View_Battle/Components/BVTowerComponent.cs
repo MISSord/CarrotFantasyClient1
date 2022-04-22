@@ -129,11 +129,12 @@ namespace ETModel
                 GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Tower, info.Value);
             }
             this.towerViewDic.Clear();
+            this.removeListener();
         }
 
         public override void dispose()
-        {
-            this.removeListener();
+        {            
+            this.clearGameInfo();
             base.dispose();
         }
     }

@@ -99,5 +99,10 @@ namespace ETModel
             return true;
         }
 
+        public void dispose()
+        {
+
+        }
+
     }
 }

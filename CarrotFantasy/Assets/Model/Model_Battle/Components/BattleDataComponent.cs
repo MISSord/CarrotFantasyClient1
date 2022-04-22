@@ -43,7 +43,7 @@ namespace ETModel
             {
 
             }
-            this.CoinCount = 1000;
+            this.CoinCount = 800;
             this.curWaves = 0;
             this.isDouleSpeed = false;
 
@@ -111,7 +111,16 @@ namespace ETModel
             SingleMapInfo unSaveMapInfo = new SingleMapInfo();
             unSaveMapInfo.bigLevelId = this.bigLevel;
             unSaveMapInfo.levelId = this.level;
-            unSaveMapInfo.isAllClear = MapInfoType.ALL_CLEAR;
+
+            BattleItemComponent itemComponent = (BattleItemComponent)this.baseBattle.getComponent(BattleComponentType.ItemComponent);
+            if(itemComponent.battleItemList.Count == 0)
+            {
+                unSaveMapInfo.isAllClear = MapInfoType.ALL_CLEAR;
+            }
+            else
+            {
+                unSaveMapInfo.isAllClear = MapInfoType.NOT_ALL_CLEAR;
+            }
             unSaveMapInfo.carrotState = this.carrotTropyLevel();
             unSaveMapInfo.unLocked = MapInfoType.UNLOCK_LEVEL;
 
@@ -137,9 +146,14 @@ namespace ETModel
             }
         }
 
-        public override void dispose()
+        public override void clearInfo()
         {
             this.removeListener();
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
             base.dispose();
         }
     }

@@ -24,6 +24,7 @@ namespace ETModel
             this.spriteRender = this.transform.GetComponent<SpriteRenderer>();
             this.animator = this.transform.GetComponent<Animator>();
             this.slider.value = 1;
+            this.slider.gameObject.transform.eulerAngles = Vector3.zero;
         }
 
         public override void init()

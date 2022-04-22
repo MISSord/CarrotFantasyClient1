@@ -21,9 +21,8 @@ namespace ETModel
             GameManager manager = this.gameObj.AddComponent<GameManager>();
             manager.init();
             manager.initBattle();
-            Server.panelServer.showPanel(new NormalModelPanel(null));
 
-            manager.startGame();
+            Sche.delayExeOnceTimes(manager.startGame, 2.0f);
         }
 
         private void addListener()

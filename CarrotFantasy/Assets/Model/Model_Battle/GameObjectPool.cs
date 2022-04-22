@@ -32,6 +32,7 @@ namespace ETModel
             this.registerUnitComponent(UnitComponentType.TRANSFORM);
             this.registerUnitComponent(UnitComponentType.MOVE_MONSTER);
             this.registerUnitComponent(UnitComponentType.MOVE_BULLET);
+            this.registerUnitComponent(UnitComponentType.MOVE_BULLET_ONE);
             this.registerUnitComponent(UnitComponentType.BEHIT);
         }
 
@@ -118,16 +119,16 @@ namespace ETModel
                 {
                     info.Value[i].dispose();
                 }
+                info.Value.Clear();
             }
-            this.curObjectDic.Clear();
             foreach (KeyValuePair<String, List<BaseUnitComponent>> info in this.curUnitObjectDic)
             {
                 for (int i = 0; i < info.Value.Count; i++)
                 {
                     info.Value[i].dispose();
                 }
+                info.Value.Clear();
             }
-            this.curUnitObjectDic.Clear();
         }
     }
 }

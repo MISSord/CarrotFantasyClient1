@@ -114,9 +114,9 @@ namespace ETModel
                 theBigLevelButtonCom.interactable = true;
                 theBigLevelButtonCom.onClick.AddListener(() =>
                 {
-                        //mUIFacade.PlayButtonAudioClip();
-                        //进入小关卡
-                        MapNormalLevelPanel gameNormalLevelPanel = new MapNormalLevelPanel(null);
+                    //mUIFacade.PlayButtonAudioClip();
+                    //进入小关卡
+                    MapNormalLevelPanel gameNormalLevelPanel = new MapNormalLevelPanel(null);
                     gameNormalLevelPanel.currentBigLevelID = info.bigLevel;
                     Server.panelServer.showPanel(gameNormalLevelPanel);
 

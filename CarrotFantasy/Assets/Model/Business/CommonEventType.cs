@@ -13,5 +13,7 @@ namespace ETModel
         public const String READY_START_PVP_GAME = "Ready_Start_PVP_Game";
 
         public const String RETURN_TO_MAIN_SCENE = "Return_To_Main_Scene";
+
+        public const String GAME_QUIT = "Game_Quit";
     }
 }

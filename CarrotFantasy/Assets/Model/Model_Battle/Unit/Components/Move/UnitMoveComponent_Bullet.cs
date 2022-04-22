@@ -9,14 +9,19 @@ namespace ETModel
 {
     public class UnitMoveComponent_Bullet : BaseUnitComponent
     {
-        private Fix64 moveSpeed;
+        protected Fix64 moveSpeed;
 
-        private Fix64 moveSpeedX;
-        private Fix64 moveSpeedY;
+        public Fix64 moveSpeedX { get; protected set; }
+        public Fix64 moveSpeedY { get; protected set; }
 
-        private UnitTransformComponent unitTrans;
-        private Fix64Vector2 mapLeftBottomPosition;
-        private Fix64Vector2 mapRightTopPosition;
+ 
+        protected Fix64Vector2 mapLeftBottomPosition;
+        protected Fix64Vector2 mapRightTopPosition;
+
+        protected UnitTransformComponent unitTran;
+
+        protected BattleUnit unitTarget;
+        protected UnitTransformComponent unitTranTarget;
 
         public UnitMoveComponent_Bullet()
         {
@@ -29,12 +34,29 @@ namespace ETModel
         public override void init()
         {
             this.moveSpeed = ((BattleUnit_Bullet)unit).moveSpeed;
+            this.unitTran = (UnitTransformComponent)this.unit.getComponent(UnitComponentType.TRANSFORM);
         }
 
-        public void registerMoveDirect(Fix64Vector2 target)
+        public virtual void registerMoveDirect(BattleUnit unit)
         {
-            this.unitTrans = (UnitTransformComponent)this.unit.getComponent(UnitComponentType.TRANSFORM);
-            Fix64Vector2 curDirect = target - this.unit.birthPosition;
+            this.unitTarget = unit;
+            this.unitTranTarget = (UnitTransformComponent)this.unitTarget.getComponent(UnitComponentType.TRANSFORM);
+            this.calcuMoveSpeed();
+        }
+
+        public virtual void removeMoveDirect(BattleUnit unit) 
+        {
+            if (unit == unitTarget) this.unitTarget = null;
+        }
+
+        public virtual void calcuMoveSpeed()
+        {
+            if (this.unitTarget == null) return;
+            if (this.unitTran == null) return;
+            Fix64Vector2 targetPosition = new Fix64Vector2(this.unitTranTarget.lastFrameX, this.unitTranTarget.lastFrameY);
+            Fix64Vector2 curPosition = new Fix64Vector2(this.unitTran.lastFrameX, this.unitTran.lastFrameY);
+
+            Fix64Vector2 curDirect = targetPosition - curPosition;
             Fix64 longSide2 = curDirect.X * curDirect.X + curDirect.Y * curDirect.Y;
             Fix64 longSide = Fix64.Sqrt(longSide2);
             Fix64 sinOne = curDirect.X / longSide;
@@ -46,10 +68,10 @@ namespace ETModel
         public override void onTick(Fix64 deltaTime)
         {
             Fix64 x, y, z;
-            this.unitTrans.getLastFramePosition(out x, out y, out z);
+            this.unitTran.getLastFramePosition(out x, out y, out z);
             x += deltaTime * this.moveSpeedX;
             y += deltaTime * this.moveSpeedY;
-            this.unitTrans.setPosition(x, y, z);
+            this.unitTran.setPosition(x, y, z);
 
             if (x <= (this.mapLeftBottomPosition.X) || x >= (this.mapRightTopPosition.X) 
                 || y <= (this.mapLeftBottomPosition.Y) || y >= (this.mapRightTopPosition.Y))
@@ -60,7 +82,9 @@ namespace ETModel
 
         public override void dispose()
         {
-            this.unitTrans = null;
+            this.unitTran = null;
+            this.unitTranTarget = null;
+            this.unitTarget = null;
         }
     }
 }

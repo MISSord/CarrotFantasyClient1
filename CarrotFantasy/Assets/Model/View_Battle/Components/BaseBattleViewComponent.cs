@@ -24,6 +24,6 @@ namespace ETModel
         public virtual void start() { } //开始游戏调用
         public virtual void onTick(float time) { }
         public virtual void clearGameInfo() { } //重新开始游戏前调用
-        public virtual void dispose() { this.clearGameInfo(); }
+        public virtual void dispose() { }
     }
 }

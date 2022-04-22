@@ -94,9 +94,9 @@ namespace ETModel
             this.x = x;
             this.y = y;
             this.z = z;
-            this.unit.eventDipatcher.dispatchEvent(UnitEvent.POSITION_CHANGE);
             this.bodyHitTestShape.reset(this.x, this.y, this.bodyRadius);
-            return false;
+            this.unit.eventDipatcher.dispatchEvent(UnitEvent.POSITION_CHANGE);
+            return true;
         }
 
         public void getPosition(out float x, out float y, out float z) //视图用
@@ -106,7 +106,7 @@ namespace ETModel
             z = (float)this.z;
         }
 
-        public void getLastFramePosition(out Fix64 x, out Fix64 y, out Fix64 z) //这个用于移动和碰撞过程
+        public void getLastFramePosition(out Fix64 x, out Fix64 y, out Fix64 z) //这个用于移动过程
         {
             x = this.lastFrameX;
             y = this.lastFrameY;

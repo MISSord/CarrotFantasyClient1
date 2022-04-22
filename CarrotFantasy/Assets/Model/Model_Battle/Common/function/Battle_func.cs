@@ -123,7 +123,7 @@ namespace ETModel
         public static bool rectContainsPoint(Fix64 rectX, Fix64 rectY, Fix64 rectWidth, Fix64 rectHeight, Fix64 pointX, Fix64 pointY)
         {
             bool ret = false;
-            if((pointX >= rectY) && (pointX <= rectX + rectWidth) 
+            if((pointX >= rectX) && (pointX <= rectX + rectWidth) 
                 && (pointY >= rectY) && (pointY <= rectY + rectHeight))
             {
                 ret = true;

@@ -126,14 +126,14 @@ namespace ETModel
         {
             List<BattleUnitView> curList = this.curObjectDic[name];
             curList.Add(unit);
-            Debug.Log(String.Format("{0}放回到视图对象池，目前长度{1}", name, curList.Count));
+            //Debug.Log(String.Format("{0}放回到视图对象池，目前长度{1}", name, curList.Count));
         }
 
         public void pushViewObjectToPool(String name, BaseUnitViewComponent unit)
         {
             List<BaseUnitViewComponent> curList = this.curUnitObjectDic[name];
             curList.Add(unit);
-            Debug.Log(String.Format("{0}放回到视图组件对象池，目前长度{1}", name, curList.Count));
+           //Debug.Log(String.Format("{0}放回到视图组件对象池，目前长度{1}", name, curList.Count));
         }
 
         public void pushGameObjectToPool(String name, GameObject node)
@@ -141,15 +141,21 @@ namespace ETModel
             List<GameObject> curList = this.curGameObjectDic[name];
             node.transform.position = GameManager.getInstance().baseBattleView.initTran;
             curList.Add(node);
-            Debug.Log(String.Format("{0}放回到视图游戏对象池，目前长度{1}", name, curList.Count));
+            //Debug.Log(String.Format("{0}放回到视图游戏对象池，目前长度{1}", name, curList.Count));
 
+        }
+
+        public void clearGameInfo()
+        {
+            this.curGameObjectDic.Clear();
+            GC.Collect();
         }
 
         public void dispose()
         {
-            foreach(KeyValuePair<String, List<BattleUnitView>>info in this.curObjectDic)
+            foreach (KeyValuePair<String, List<BattleUnitView>> info in this.curObjectDic)
             {
-                for(int i = 0; i < info.Value.Count; i++)
+                for (int i = 0; i < info.Value.Count; i++)
                 {
                     info.Value[i].dispose();
                 }
@@ -164,6 +170,8 @@ namespace ETModel
             }
             this.curUnitObjectDic.Clear();
             this.curGameObjectDic.Clear();
+
+            gamePool = null;
             GC.Collect();
         }
     }

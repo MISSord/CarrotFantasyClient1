@@ -37,7 +37,7 @@ namespace ETModel
         {
             UIServer.getInstance().playButtonEffect();
             this.transform.gameObject.SetActive(false);
-            GameManager.getInstance().baseBattle.eventDispatcher.dispatchEvent(BattleEvent.PAUSE_THE_GAME);
+            GameManager.getInstance().baseBattle.eventDispatcher.dispatchEvent(BattleEvent.GO_ON_GAME);
         }
 
         public void btnEvenReplay()

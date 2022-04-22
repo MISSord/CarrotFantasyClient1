@@ -11,6 +11,8 @@ namespace ETModel
     {
         private static GameManager instance;
 
+        private NormalModelPanel panel;
+
         public static GameManager getInstance()
         {
             return instance;
@@ -38,6 +40,7 @@ namespace ETModel
                 //this.baseBattleView = new PveBattleView(this.baseBattle);
             }
             this.baseBattleView.rootGameObject = this.transform.gameObject;
+            this.addLitener();
         }
 
         private void addLitener()
@@ -52,9 +55,18 @@ namespace ETModel
 
         private void restartGame()
         {
-            this.baseBattleView.dispose();
-            this.baseBattle.dispose();
+            UIServer.getInstance().showLoadingPanel();
+            this.baseBattleView.clearGameInfo();
+            this.baseBattle.clearGameInfo();
 
+
+            if (this.panel != null)
+            {
+                this.panel.finish();
+                this.panel = null;
+            }
+
+            this.initBattle();
             Sche.delayExeOnceTimes(this.startGame, 2.0f);
         }
 
@@ -65,13 +77,15 @@ namespace ETModel
             this.baseBattleView.init();
             this.baseBattleView.initComponents();
 
-            this.addLitener();
+            this.panel = new NormalModelPanel(null);
+            Server.panelServer.showPanel(this.panel);
         }
 
         public void startGame()
         {
             this.baseBattle.startGame();
             this.baseBattleView.startGame();
+            UIServer.getInstance().fadeLoadingPanel();
         }
 
         public void Update()
@@ -88,6 +102,8 @@ namespace ETModel
 
             this.baseBattleView = null;
             this.baseBattle = null;
+
+            UIServer.getInstance().showLoadingPanel();
         }
     }
 }

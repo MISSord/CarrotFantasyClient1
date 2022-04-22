@@ -35,13 +35,19 @@ namespace ETModel
         private Text txtButtonUp;
 
         private GameObject nodeMap;
+        private GameObject nodeTargetSignal;
+
+        private BattleUnit tranTarget;
 
         private Text txtButtonSell;
 
         private MapUIConfigReader reader;
 
         private GameObject nodeCarrot;
+        private GameObject nodeMonsterPoint;
         private Carrot carrot;
+
+        private GameObject rootGameObject;
 
         public BVUIComponent(BattleView_base battleView) : base(battleView)
         {
@@ -51,6 +57,9 @@ namespace ETModel
             this.buttonTowerList = new ButtonTower[this.towerComponent.canBuildTowerListLength];
             this.spriteButtonUpList = new Sprite[3];
             this.componentType = BattleViewComponentType.UI;
+
+            this.reader = new MapUIConfigReader();
+            this.reader.init();
         }
 
         private void addListener()
@@ -68,6 +77,9 @@ namespace ETModel
             this.tranButtonUp.GetComponent<Button>().onClick.AddListener(this.updateTower);
 
             this.eventDispatcher.addListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_ADD, this.updateNodeState);
+            this.eventDispatcher.addListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_REMOVE, this.updateTargetSignal);
+
+            this.eventDispatcher.addListener<BattleUnit>(BattleEvent.TARGET_CHANGE, this.setTargetSignal);
         }
 
         private void removeListener()
@@ -85,22 +97,20 @@ namespace ETModel
             this.tranButtonUp.GetComponent<Button>().onClick.RemoveAllListeners();
 
             this.eventDispatcher.removeListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_ADD, this.updateNodeState);
+            this.eventDispatcher.removeListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_REMOVE, this.updateTargetSignal);
+
+            this.eventDispatcher.removeListener<BattleUnit>(BattleEvent.TARGET_CHANGE, this.setTargetSignal);
         }
 
         public override void init()
         {
-            this.reader = new MapUIConfigReader();
-            this.reader.init();
+            BVSceneComponent scene = (BVSceneComponent)this.battleView.getComponent(BattleViewComponentType.SCENE);
+            this.rootGameObject = scene.registerGameContainer("UIContainer");
 
             this.nodeTowerList = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/UI/tower_list"));
+            this.nodeTowerList.transform.SetParent(this.rootGameObject.transform);
             this.nodeTowerList.transform.position = this.battleView.initTran;
             this.nodeTowerList.transform.GetComponent<Canvas>().sortingOrder = 20;
-            this.nodeCarrot = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/Carrot"));
-            this.carrot = this.nodeCarrot.transform.GetComponent<Carrot>();
-
-
-            Fix64Vector2 curPosition = this.mapComponent.monsterPathList[this.mapComponent.monsterPathList.Count - 1];
-            this.carrot.transform.position = new Vector3((float)curPosition.X, (float)curPosition.Y, 0);
 
             for (int i = 0; i <= this.towerComponent.canBuildTowerListLength - 1; i++)
             {
@@ -114,7 +124,8 @@ namespace ETModel
                 itemGo.transform.localScale = Vector3.one;
             }
 
-            nodeHandleTowerCanvas = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/UI/handle_tower_canvas"));
+            this.nodeHandleTowerCanvas = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/UI/handle_tower_canvas"));
+            this.nodeHandleTowerCanvas.transform.SetParent(this.rootGameObject.transform);
             this.nodeHandleTowerCanvas.transform.position = this.battleView.initTran;
             this.nodeHandleTowerCanvas.transform.GetComponent<Canvas>().sortingOrder = 20;
 
@@ -123,18 +134,68 @@ namespace ETModel
             this.spriteButtonUpList[2] = ResourceLoader.getInstance().loadRes<Sprite>("Pictures/NormalMordel/Game/Tower/Btn_ReachHighestLevel"); //满级
 
             this.nodeMap = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/nodeMap"));
+            this.nodeMap.transform.SetParent(this.rootGameObject.transform);
             this.nodeMap.transform.position = new Vector3(6, 4.35f, 0);
             Dictionary<String, int> map = this.reader.getMapUIConfig(dataComponent.bigLevel, dataComponent.level);
             this.nodeMap.transform.Find("img_bg").GetComponent<SpriteRenderer>().sprite = ResourceLoader.getInstance().
                 loadRes<Sprite>(String.Format("Pictures/NormalMordel/Game/{0}/BG{1}", dataComponent.bigLevel, map["mapBg"]));
             this.nodeMap.transform.Find("img_road").GetComponent<SpriteRenderer>().sprite = ResourceLoader.getInstance().
                 loadRes<Sprite>(String.Format("Pictures/NormalMordel/Game/{0}/Road{1}", dataComponent.bigLevel, map["mapRoad"]));
-            this.nodeMap.transform.Find("img_bg").GetComponent<SpriteRenderer>().sortingOrder = 2;
+            this.nodeMap.transform.Find("img_bg").GetComponent<SpriteRenderer>().sortingOrder = 0;
             this.nodeMap.transform.Find("img_road").GetComponent<SpriteRenderer>().sortingOrder = 4;
 
+            this.nodeTargetSignal = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/node_target_signal"));
+            this.nodeTargetSignal.transform.SetParent(this.rootGameObject.transform);
+            this.nodeTargetSignal.transform.position = this.battleView.initTran;
+
             this.loadInfo();
+            this.setStartPoint();
+            this.setCarrot();
 
             this.addListener();
+        }
+
+        private void setStartPoint()
+        {
+            this.nodeMonsterPoint = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/startPoint"));
+            this.nodeMonsterPoint.transform.SetParent(this.rootGameObject.transform);
+            Fix64Vector2 startPosition = this.mapComponent.monsterPathList[0];
+
+            bool isRight = this.mapComponent.monsterPathList[1].X - this.mapComponent.monsterPathList[0].X > Fix64.Zero ? true : false;
+            bool isUP = this.mapComponent.monsterPathList[1].Y - this.mapComponent.monsterPathList[0].Y > Fix64.Zero ? true : false;
+
+            if (this.mapComponent.monsterPathList[1].X - this.mapComponent.monsterPathList[0].X != Fix64.Zero) //左或者右
+            {
+                if (isRight == true)
+                {
+                    this.nodeMonsterPoint.transform.position = new Vector3((float)startPosition.X , (float)startPosition.Y + 0.5f, 0);
+                }
+                else
+                {
+                    this.nodeMonsterPoint.transform.position = new Vector3((float)startPosition.X, (float)startPosition.Y + 0.3f, 0);
+                }
+            }
+            else //上或下
+            {
+                if (isUP == true)
+                {
+                    this.nodeMonsterPoint.transform.position = new Vector3((float)startPosition.X - 0.1f, (float)startPosition.Y - 0.5f, 0);
+                }
+                else
+                {
+                    this.nodeMonsterPoint.transform.position = new Vector3((float)startPosition.X - 0.1f, (float)startPosition.Y + 0.5f, 0);
+                }
+            }
+        }
+
+        private void setCarrot()
+        {
+            this.nodeCarrot = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/Carrot"));
+            this.nodeCarrot.transform.SetParent(this.rootGameObject.transform);
+            this.carrot = this.nodeCarrot.transform.GetComponent<Carrot>();
+            this.carrot.init();
+            Fix64Vector2 endPosition = this.mapComponent.monsterPathList[this.mapComponent.monsterPathList.Count - 1];
+            this.carrot.transform.position = new Vector3((float)endPosition.X + 0.1f, (float)endPosition.Y + 0.5f, 0);
         }
 
         private void loadInfo()
@@ -176,7 +237,7 @@ namespace ETModel
             }
             else
             {
-                if(dataComponent.CoinCount >= tower.price[tower.curLevel])
+                if(dataComponent.CoinCount >= tower.price[tower.curLevel + 1])
                 {
                     this.imgButtonUp.sprite = this.spriteButtonUpList[1];
                 }
@@ -184,7 +245,7 @@ namespace ETModel
                 {
                     this.imgButtonUp.sprite = this.spriteButtonUpList[0];
                 }
-                this.txtButtonUp.text = tower.price[tower.curLevel].ToString();
+                this.txtButtonUp.text = tower.price[tower.curLevel + 1].ToString();
             }
             this.txtButtonSell.text = (tower.price[tower.curLevel] - 20).ToString();
         }
@@ -344,10 +405,42 @@ namespace ETModel
             }
         }
 
-        public override void dispose()
+        private void updateTargetSignal(String type, BattleUnit unit)
+        {
+            if (type.Equals(BattleUnitType.ITEM))
+            {
+                if(unit == this.tranTarget)
+                {
+                    this.fadeTargetSignal();
+                }
+            }
+        }
+
+        private void setTargetSignal(BattleUnit unit)
+        {
+            if (this.tranTarget == null)
+            {
+                this.tranTarget = unit;
+                this.showTargetSignal();
+            }
+            //转换新目标
+            else if (this.tranTarget != unit)
+            {
+                this.tranTarget = unit;
+                this.showTargetSignal();
+            }
+            //两次点击的是同一个目标
+            else if (this.tranTarget == unit)
+            {
+                this.tranTarget = null;
+                this.fadeTargetSignal();
+            }
+        }
+
+        public override void clearGameInfo()
         {
             this.carrot.dispose();
-            for(int i = 0; i < this.buttonTowerList.Length - 1; i++)
+            for (int i = 0; i < this.buttonTowerList.Length - 1; i++)
             {
                 this.buttonTowerList[i].dispose();
             }
@@ -357,6 +450,26 @@ namespace ETModel
             GameObject.Destroy(this.nodeTowerList);
             GameObject.Destroy(this.nodeCarrot);
             GameObject.Destroy(this.nodeMap);
+        }
+
+        private void showTargetSignal()
+        {
+            UIServer.getInstance().audioManager.playEffect("AudioClips/NormalMordel/Tower/ShootSelect");
+            UnitTransformComponent tranComponent = (UnitTransformComponent)this.tranTarget.getComponent(UnitComponentType.TRANSFORM);
+            Fix64Vector2 pos = tranComponent.getLastPosition();
+            Vector3 position = new Vector3((float)pos.X, (float)pos.Y, 0);
+            this.nodeTargetSignal.transform.position = position + new Vector3(0, BattleConfig.MAP_RATIO / 2, 0);
+            //nodeTargetSignal.transform.SetParent(targetTrans);
+        }
+
+        private void fadeTargetSignal()
+        {
+            this.nodeTargetSignal.transform.position = this.battleView.initTran;
+        }
+
+        public override void dispose()
+        {
+            this.clearGameInfo();
             base.dispose();
         }
 

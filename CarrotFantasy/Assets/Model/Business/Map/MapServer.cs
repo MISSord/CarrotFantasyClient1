@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ETModel
 {
@@ -33,6 +30,9 @@ namespace ETModel
         {
             base.loadModule();
             this.addListener();
+
+            this.curBigLevel = 0;
+            this.curLevel = 0;
         }
 
         private void addListener()
@@ -62,7 +62,7 @@ namespace ETModel
         private void notifyUserInfo(IMessage message)
         {
             A1001_GetUserInfo_G2C msg = (A1001_GetUserInfo_G2C)message;
-            if(msg.Error == ErrorCode.ERR_Success)
+            if (msg.Error == ErrorCode.ERR_Success)
             {
                 this.mapModel.parseMapInfo(msg.MapInfo);
             }
@@ -71,7 +71,7 @@ namespace ETModel
         private void notifySetSingleMapInfo(IMessage message)
         {
             A1002_SetSingleMapInfo_G2C msg = (A1002_SetSingleMapInfo_G2C)message;
-            if(msg.Error == ErrorCode.ERR_Success)
+            if (msg.Error == ErrorCode.ERR_Success)
             {
                 this.mapModel.updateSingleMapInfo(this.unSaveMapInfo);
                 this.mapModel.updateSingleMapInfoUnLockState(msg.BigLevelId, msg.LevelId, msg.UnLocked);
@@ -87,6 +87,7 @@ namespace ETModel
                 //this.eventDispatcher.dispatchEvent(MapEventType.CAN_START_GAME);
                 Business.getInstance().eventDispatcher.dispatchEvent(CommonEventType.READY_START_PVE_GAME);
                 Server.sceneServer.loadScene(BaseSceneType.BattleScene, null);
+                UIServer.getInstance().showLoadingPanel();
             }
             else
             {

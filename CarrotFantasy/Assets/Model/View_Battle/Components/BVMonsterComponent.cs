@@ -14,17 +14,14 @@ namespace ETModel
         private GameObject noInstanGameObject;
         private GameObject rootGameObject;
 
+        private BattleSchedulerComponent scheComponent;
+
         private Dictionary<BattleUnit_Monster, BattleUnitView_Monster> monsterDic = new Dictionary<BattleUnit_Monster, BattleUnitView_Monster>();
 
         public BVMonsterComponent(BattleView_base battleView) : base(battleView)
         {
             this.componentType = BattleViewComponentType.MONSTER;
             this.pathUrl = "Prefabs/Game/MonsterPrefab";
-
-            this.rootGameObject = new GameObject();
-            this.rootGameObject.transform.SetParent(this.battleView.rootGameObject.transform);
-            this.rootGameObject.transform.localPosition = Vector3.zero;
-            this.rootGameObject.transform.localScale = Vector3.one;
         }
 
         public override void init()
@@ -33,7 +30,10 @@ namespace ETModel
             this.rootGameObject = scene.registerGameContainer("MonsterContainer");
             this.noInstanGameObject = ResourceLoader.getInstance().getGameObject(this.pathUrl);
 
+            this.scheComponent = (BattleSchedulerComponent)this.battle.getComponent(BattleComponentType.SchedulerComponent);
+
             GameViewObjectPool.getInstance().registerGameObject(BattleUnitViewType.Monster);
+            GameViewObjectPool.getInstance().registerGameObject(BattleUnitViewType.DestroyEffect);
             this.addListener();
         }
 
@@ -92,24 +92,42 @@ namespace ETModel
                 Debug.Log("移除怪兽视图出错");
                 return;
             }
+            GameViewObjectPool.getInstance().pushGameObjectToPool(BattleUnitViewType.Monster, monsterView.transform.gameObject);
             monsterView.clearUnitInfo();
             this.monsterDic.Remove(monster);
             GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Monster, monsterView);
             UIServer.getInstance().audioManager.playEffect(String.Format("AudioClips/NormalMordel/Monster/{0}/{1}",monster.curLevel,monster.monsterId));
+
+            //特效
+            GameObject sell = GameViewObjectPool.getInstance().getNewGameObject(BattleUnitViewType.DestroyEffect);
+            if(sell == null)
+            {
+                sell = GameObject.Instantiate(ResourceLoader.getInstance().getGameObject("Prefabs/Game/DestoryEffect"));
+            }
+            sell.transform.GetComponent<Animator>().enabled = true;
+            UnitTransformComponent tran = (UnitTransformComponent)unit.getComponent(UnitComponentType.TRANSFORM);
+            sell.transform.position = new Vector3((float)tran.lastFrameX, (float)tran.lastFrameY, 0);
+            Sche.delayExeOnceTimes(() => {
+                sell.transform.GetComponent<Animator>().enabled = false;
+                GameViewObjectPool.getInstance().pushGameObjectToPool(BattleUnitViewType.DestroyEffect, sell);
+            }, 0.5f);
         }
 
         public override void clearGameInfo()
         {
             foreach (KeyValuePair<BattleUnit_Monster, BattleUnitView_Monster> info in this.monsterDic)
             {
+                GameViewObjectPool.getInstance().pushGameObjectToPool(BattleUnitViewType.Monster, info.Value.transform.gameObject);
+                info.Value.clearUnitInfo();
                 GameViewObjectPool.getInstance().pushViewObjectToPool(BattleUnitViewType.Monster, info.Value);
             }
             this.monsterDic.Clear();
+            this.removeListener();
         }
 
         public override void dispose()
         {
-            this.removeListener();
+            this.clearGameInfo();
             base.dispose();
         }
     }

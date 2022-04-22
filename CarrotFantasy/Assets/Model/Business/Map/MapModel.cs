@@ -103,7 +103,10 @@ namespace ETModel
         {
             if(unSave != null)
             {
-                this.allMapInfo[this.getMapNumber(unSave)] = unSave;
+                SingleMapInfo info = this.allMapInfo[this.getMapNumber(unSave)];
+                info.carrotState = info.carrotState >= unSave.carrotState ? info.carrotState : unSave.carrotState;
+                info.isAllClear = info.isAllClear <= unSave.isAllClear ? info.isAllClear : unSave.isAllClear;
+                this.allMapInfo[this.getMapNumber(unSave)] = info;
                 this.refreshBigLevelMapInfo(unSave.bigLevelId);
             }
             else

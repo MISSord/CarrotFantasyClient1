@@ -65,16 +65,6 @@ namespace ETModel
             return currentState;
         }
 
-        public void restartGame()
-        {
-            this.currentState.stateOut();
-            foreach (KeyValuePair<String, BaseBattleState> stateInfo in stateDic)
-            {
-                stateInfo.Value.dispose();
-            }
-            this.stateDic.Clear();
-        }
-
         public void onTick(Fix64 time)
         {
             if (currentState == null) return;
@@ -85,14 +75,22 @@ namespace ETModel
             }
         }
 
-        public void dispose()
+        public void clearGameInfo()
         {
-            this.currentState.stateOut();
-            foreach(KeyValuePair<String, BaseBattleState> stateInfo in stateDic)
+            if(this.currentState != null)
+            {
+                this.currentState.stateOut();
+            }
+            foreach (KeyValuePair<String, BaseBattleState> stateInfo in stateDic)
             {
                 stateInfo.Value.dispose();
             }
             this.stateDic.Clear();
+        }
+
+        public void dispose()
+        {
+            this.clearGameInfo();
             this.eventDispatcher = null;
         }
     }

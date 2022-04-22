@@ -101,6 +101,9 @@ namespace ETModel
             {
                 this.componentList[i].clearGameInfo();
             }
+            this.componentDic.Clear();
+            this.componentList.Clear();
+            this.isStart = false;
         }
 
         public virtual void dispose()

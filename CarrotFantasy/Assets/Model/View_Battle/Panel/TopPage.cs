@@ -33,6 +33,8 @@ namespace ETModel
         public Sprite[] btn_gameSpeedSprites;
         public Sprite[] btn_pauseSprites;
 
+        public BaseBattle battle;
+
         //开关
         private bool isNormalSpeed;
         private bool isPause;
@@ -42,7 +44,6 @@ namespace ETModel
             this.transform = node;
             this.btn_gameSpeedSprites = new Sprite[2];
             this.btn_pauseSprites = new Sprite[2];
-            this.dataComponent = (BattleDataComponent)GameManager.getInstance().baseBattle.getComponent(BattleComponentType.DataComponent);
         }
 
         private void loadResource()
@@ -59,10 +60,10 @@ namespace ETModel
             this.txtCoin = this.transform.Find("txt_coin").GetComponent<Text>();
             this.txtWaveInfo = this.transform.Find("node_playing_text/txt_waves_info").GetComponent<Text>();
 
-            this.nodeBtnGameSpeed = this.transform.Find("node_btn_container/Btn_GameSpeed").gameObject;
+            //this.nodeBtnGameSpeed = this.transform.Find("node_btn_container/Btn_GameSpeed").gameObject;
             this.nodeBtnPause = this.transform.Find("node_btn_container/Btn_Pause").gameObject;
 
-            this.img_Btn_GameSpeed = this.nodeBtnGameSpeed.transform.GetComponent<Image>();
+            //this.img_Btn_GameSpeed = this.nodeBtnGameSpeed.transform.GetComponent<Image>();
             this.img_Btn_Pause = this.nodeBtnPause.transform.GetComponent<Image>();
 
             this.node_pause = this.transform.Find("node_pause").gameObject;
@@ -71,21 +72,27 @@ namespace ETModel
 
         private void addListener()
         {
-            this.nodeBtnPause.transform.GetComponent<Button>().onClick.AddListener(this.pauseGame);
-            this.nodeBtnGameSpeed.transform.GetComponent<Button>().onClick.AddListener(this.changeGameSpeed);
+            this.nodeBtnPause.transform.GetComponent<Button>().onClick.AddListener(this.btnPauseGame);
+            //this.nodeBtnGameSpeed.transform.GetComponent<Button>().onClick.AddListener(this.changeGameSpeed);
 
             this.dataComponent.eventDispatcher.addListener<int>(BattleEvent.COIN_CHANGE, this.updateCoinText);
             this.dataComponent.eventDispatcher.addListener<int>(BattleEvent.WAVES_NUMBER_ADD, this.updateRoundText);
+
+            this.battle.eventDispatcher.addListener<bool>(BattleEvent.GAME_STATE_CHANGE, this.pauseGame);
         }
 
         private void removeListener()
         {
             this.dataComponent.eventDispatcher.removeListener<int>(BattleEvent.COIN_CHANGE, this.updateCoinText);
             this.dataComponent.eventDispatcher.removeListener<int>(BattleEvent.WAVES_NUMBER_ADD, this.updateRoundText);
+
+            this.battle.eventDispatcher.removeListener<bool>(BattleEvent.GAME_STATE_CHANGE, this.pauseGame);
         }
 
         public void init()
         {
+            this.dataComponent = (BattleDataComponent)GameManager.getInstance().baseBattle.getComponent(BattleComponentType.DataComponent);
+            this.battle = GameManager.getInstance().baseBattle;
             this.loadResource();
             this.loadTransform();
 
@@ -94,7 +101,7 @@ namespace ETModel
             this.updateCoinText(0);
             this.updateRoundText(0);
 
-            isPause = false;
+            this.isPause = this.battle.isPause;
             isNormalSpeed = true;
             this.updateBtnPause();
             this.updateBtnSpeed();
@@ -122,7 +129,7 @@ namespace ETModel
 
         private void updateBtnSpeed()
         {
-            img_Btn_GameSpeed.sprite = btn_gameSpeedSprites[isNormalSpeed ? 0 : 1];
+            //img_Btn_GameSpeed.sprite = btn_gameSpeedSprites[isNormalSpeed ? 0 : 1];
         }
 
         //改变游戏速度
@@ -133,16 +140,29 @@ namespace ETModel
             this.updateBtnSpeed();
         }
 
-        //游戏暂停
-        public void pauseGame()
+        public void btnPauseGame()
         {
             UIServer.getInstance().playButtonEffect();
-            isPause = !isPause;
+            if (this.isPause == true)
+            {
+                GameManager.getInstance().baseBattle.eventDispatcher.dispatchEvent(BattleEvent.GO_ON_GAME);
+            }
+            else
+            {
+                GameManager.getInstance().baseBattle.eventDispatcher.dispatchEvent(BattleEvent.PAUSE_THE_GAME);
+            }
+        }
+
+        //游戏暂停
+        public void pauseGame(bool isPause)
+        {
+            this.isPause = isPause;
             this.updateBtnPause();
             this.node_pause.SetActive(isPause);
             this.node_playingText.SetActive(!isPause);
-            GameManager.getInstance().baseBattle.eventDispatcher.dispatchEvent(BattleEvent.PAUSE_THE_GAME);
         }
+
+
 
         public void dispose()
         {

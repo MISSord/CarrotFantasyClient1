@@ -24,14 +24,14 @@ namespace ETModel
             this.componentType = BattleComponentType.TowerComponent;
             this.canBuildTowerList = BattleParamServer.getInstance().curStage.mTowerIDList;
             this.canBuildTowerListLength = BattleParamServer.getInstance().curStage.mTowerIDListLength;
+            this.configReader = new TowerConfigReader();
+            this.configReader.init();
         }
 
         public override void init()
         {
             this.dataComponent = (BattleDataComponent)this.baseBattle.getComponent(BattleComponentType.DataComponent);
             this.mapComponent = (BattleMapComponent)this.baseBattle.getComponent(BattleComponentType.MapComponent);
-            this.configReader = new TowerConfigReader();
-            this.configReader.init();
         }
 
         private int getExChangeInt(int x, int y)
@@ -51,7 +51,7 @@ namespace ETModel
                 int price = (int)this.configReader.getSingleTowerConfig(order.towerId)["price0"];
                 if(price > dataComponent.CoinCount)
                 {
-                    Server.panelServer.showTip(LanguageUtil.getInstance().getString(1004));
+                    UIServer.getInstance().showTip(LanguageUtil.getInstance().getString(1004));
                     return;
                 }
                 BattleUnit_Tower tower = GameObjectPool.getInstance().getNewBattleUnit<BattleUnit_Tower>(BattleUnitType.TOWER);
@@ -128,14 +128,19 @@ namespace ETModel
             return null;
         }
 
-        public override void dispose()
+        public override void clearInfo()
         {
-            foreach(KeyValuePair<int, BattleUnit_Tower> info in this.curTowerDic)
+            base.clearInfo();
+            foreach (KeyValuePair<int, BattleUnit_Tower> info in this.curTowerDic)
             {
                 info.Value.ClearInfo();
             }
-            this.dataComponent = null;
-            this.mapComponent = null;
+            this.curTowerDic.Clear();
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
         }
 
     }

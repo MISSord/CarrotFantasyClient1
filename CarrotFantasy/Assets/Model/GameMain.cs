@@ -23,13 +23,6 @@ namespace ETModel
 
 			//加载登录场景
 			Server.sceneServer.loadScene(BaseSceneType.MainScene, null);
-
-
-			//发送各业务的信息请求
-			//获取后加载各业务
-			//主场景
-
-			//战斗场景
 			
 		}
 
@@ -38,6 +31,10 @@ namespace ETModel
 			OneThreadSynchronizationContext.Instance.Update();
 			Game.EventSystem.Update();
 			Sche.tick(new Fix64(Time.deltaTime));
+			if(Business.getInstance().isGameQuit == true)
+            {
+				OnApplicationQuit();
+            }
 		}
 
 		private void LateUpdate()
@@ -45,9 +42,14 @@ namespace ETModel
 			Game.EventSystem.LateUpdate();
 		}
 
-		private void OnApplicationQuit()
-		{
+        private void OnApplicationQuit()
+        {
 			Game.Close();
+#if UNITY_EDITOR//在编辑器模式退出
+			UnityEditor.EditorApplication.isPlaying = false;
+#else//发布后退出
+        Application.Quit();
+#endif
 		}
 
 		private async ETVoid StartAsync()

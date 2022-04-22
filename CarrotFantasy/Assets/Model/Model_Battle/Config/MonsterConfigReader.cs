@@ -14,34 +14,34 @@ namespace ETModel
         {
             this.monsterBirthParam.Add(101, new Dictionary<String, Fix64>() { 
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(80)},
             });
             this.monsterBirthParam.Add(102, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(80)},
             });
             this.monsterBirthParam.Add(103, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(80)},
             });
             this.monsterBirthParam.Add(104, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -50,7 +50,7 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(105, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -59,7 +59,7 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(106, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -68,7 +68,7 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(107, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -77,7 +77,7 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(108, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -86,7 +86,7 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(109, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
@@ -95,30 +95,30 @@ namespace ETModel
             });
             this.monsterBirthParam.Add(110, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(110)},
             });
             this.monsterBirthParam.Add(111, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.3f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(150)},
             });
             this.monsterBirthParam.Add(112, new Dictionary<String, Fix64>() {
                 { "faceDirection", Fix64.Zero},
-                { "bodyRadius", Fix64.One},
+                { "bodyRadius", new Fix64(0.6f)},
                 { "scale", Fix64.One},
                 { "offsetX", Fix64.Zero},
                 { "offsetY", Fix64.Zero},
                 { "speed", Fix64.One},
-                { "live", new Fix64(100)},
+                { "live", new Fix64(300)},
             });
         }
 

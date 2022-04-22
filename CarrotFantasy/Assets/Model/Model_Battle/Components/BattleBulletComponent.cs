@@ -17,26 +17,28 @@ namespace ETModel
         public BattleBulletComponent(BaseBattle bBattle) : base(bBattle)
         {
             this.componentType = BattleComponentType.BulletComponent;
+            this.configReader = new BulletConfigReader();
+            this.configReader.init();
         }
 
         public override void init()
         {
-            this.configReader = new BulletConfigReader();
-            this.configReader.init();
             this.addListener();
         }
 
         private void addListener()
         {
-            this.eventDispatcher.addListener<BattleUnit_Tower, Fix64Vector2>(BattleEvent.BULLET_BUILD, this.buildNewBullet);
+            this.eventDispatcher.addListener<BattleUnit_Tower, BattleUnit>(BattleEvent.BULLET_BUILD, this.buildNewBullet);
+            this.eventDispatcher.addListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_REMOVE, this.updateBullInfo);
         }
 
         private void removeListener()
         {
-            this.eventDispatcher.removeListener<BattleUnit_Tower,Fix64Vector2>(BattleEvent.BULLET_BUILD, this.buildNewBullet);
+            this.eventDispatcher.removeListener<BattleUnit_Tower,BattleUnit>(BattleEvent.BULLET_BUILD, this.buildNewBullet);
+            this.eventDispatcher.removeListener<String, BattleUnit>(BattleEvent.BATTLE_UNIT_REMOVE, this.updateBullInfo);
         }
 
-        public void buildNewBullet(BattleUnit_Tower tower, Fix64Vector2 target)
+        public void buildNewBullet(BattleUnit_Tower tower, BattleUnit target)
         {
             BattleUnit_Bullet bullet = GameObjectPool.getInstance().getNewBattleUnit<BattleUnit_Bullet>(BattleUnitType.BULLET);
             if (bullet == null)
@@ -68,6 +70,15 @@ namespace ETModel
         {
             base.lateTick(time);
             this.updateCurMonsterWaveStateLateTick(time);
+        }
+
+        private void updateBullInfo(String type, BattleUnit unit)
+        {
+            if (type.Equals(BattleUnitType.TOWER)) return;
+            for(int i = 0; i <= this.curBulletList.Count - 1; i++)
+            {
+                this.curBulletList[i].moveComponent.removeMoveDirect(unit);
+            }
         }
 
         public void updateCurBulletState(Fix64 time)
@@ -102,9 +113,9 @@ namespace ETModel
                 }
             }
         }
-        public override void dispose()
+
+        public override void clearInfo()
         {
-            this.removeListener();
             if (this.curBulletList.Count != 0)
             {
                 for (int i = 0; i < this.curBulletList.Count; i++)
@@ -115,6 +126,12 @@ namespace ETModel
             }
             this.curBulletList.Clear();
             this.bulletDeadList.Clear();
+            this.removeListener();
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
             base.dispose();
         }
     }

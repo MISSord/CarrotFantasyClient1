@@ -14,6 +14,15 @@ namespace ETModel
         public AudioManager audioManager;
         public FpsNode fpsNode;
 
+        private GameObject loadingPanelObject;
+
+        private TipUI tipPanel;
+        private String loadingPanelUrl = "Prefabs/Util/LoadingPanel";
+        private String tipPanelUrl = "Prefabs/Util/TipPanel";
+
+        private Vector3 fadePosition = new Vector3(2000, 0, 0);
+        private Vector3 showPosition = Vector3.zero;
+
         public static UIServer uiServer;
 
         public static UIServer getInstance()
@@ -33,6 +42,50 @@ namespace ETModel
             this.showFpsNode();
             this.initCustomizeShow();
             this.initResolution();
+
+            this.addTipPanel();
+            this.addLoadingPanel();
+        }
+
+        private void addLoadingPanel()
+        {
+            GameObject panel = ResourceLoader.getInstance().getGameObject(loadingPanelUrl);
+            this.loadingPanelObject = GameObject.Instantiate(panel);
+            this.loadingPanelObject.transform.SetParent(this.nodeObject.transform, false);
+            this.loadingPanelObject.SetActive(false);
+        }
+
+        public void showTip(String tip)
+        {
+            this.tipPanel.refreshTip(tip);
+        }
+
+        public void showTipLong(String tip)
+        {
+            this.tipPanel.showTip(tip);
+        }
+
+        public void fadeTipLong()
+        {
+            this.tipPanel.fadeTip();
+        }
+
+        public void showLoadingPanel()
+        {
+            this.loadingPanelObject.SetActive(true);
+        }
+
+        public void fadeLoadingPanel()
+        {
+            this.loadingPanelObject.SetActive(false);
+        }
+
+        private void addTipPanel()
+        {
+            GameObject panel = ResourceLoader.getInstance().getGameObject(tipPanelUrl);
+            GameObject pan = GameObject.Instantiate(panel);
+            pan.transform.SetParent(this.nodeObject.transform, false);
+            this.tipPanel = new TipUI(pan);
         }
 
         private void initGlobalCanvas()

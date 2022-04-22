@@ -109,7 +109,12 @@ namespace ETModel
             {
                 this.gridsList[order.x, order.y].changeTowerState(false);
             }
+        }
 
+        public override void clearInfo()
+        {
+            this.monsterPathList.Clear();
+            this.gridsList = null;
         }
 
     }

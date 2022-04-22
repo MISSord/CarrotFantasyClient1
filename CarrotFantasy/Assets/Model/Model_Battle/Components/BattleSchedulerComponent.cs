@@ -8,8 +8,8 @@ namespace ETModel
 {
     public class BattleSchedulerComponent : BaseBattleComponent
     {
-        private static List<ScheObject> scheList = new List<ScheObject>();
-        private static Dictionary<int, ScheObject> scheDic = new Dictionary<int, ScheObject>();
+        private List<ScheObject> scheList = new List<ScheObject>();
+        private Dictionary<int, ScheObject> scheDic = new Dictionary<int, ScheObject>();
         private BaseBattleComponent logComponent;
 
         private Fix64 lastResetTime = Fix64.Zero;
@@ -34,7 +34,6 @@ namespace ETModel
 
         public override void onTick(Fix64 time)
         {
-            //Fix64 curTime = new Fix64(TimeUtil.getCurTime());
             Fix64 curTime = this.onClock();
             int curUnscheCount = 0; //当前不参与延时调用方法的数量
             for(int i = 0; i < scheList.Count; i++)
@@ -79,14 +78,14 @@ namespace ETModel
 
         public int delayExeOnceTimes(callBack call, float interval)
         {
-            ScheObject sche = addSingleSche(call, interval);
+            ScheObject sche = this.addSingleSche(call, interval);
             sche.isOnce = true;
             return sche.uid;
         }
 
         public int delayExeMultipleTimes(callBack call, float interval)
         {
-            ScheObject sche = addSingleSche(call, interval);
+            ScheObject sche = this.addSingleSche(call, interval);
             sche.isOnce = false;
             return sche.uid;
         }
@@ -95,8 +94,8 @@ namespace ETModel
         {
             int id = getUniqueId();
             ScheObject sche = new ScheObject(id, call, interval, this.onClock());
-            scheList.Add(sche);
-            scheDic.Add(id, sche);
+            this.scheList.Add(sche);
+            this.scheDic.Add(id, sche);
             return sche;
         }
 
@@ -108,6 +107,19 @@ namespace ETModel
                 sche.isUnscheduled = true;
                 scheDic.Remove(id);
             }
+        }
+
+        public override void clearInfo()
+        {
+            this.scheList.Clear();
+            this.scheDic.Clear();
+            this.curIndex = 0;
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
+            base.dispose();
         }
 
         private int getUniqueId()

@@ -36,8 +36,6 @@ namespace ETModel
             this.sprGirdNoramlState = ResourceLoader.getInstance().loadRes<Sprite>("Pictures/NormalMordel/Game/Grid");
             this.sprGirdStartState = ResourceLoader.getInstance().loadRes<Sprite>("Pictures/NormalMordel/Game/StartSprite");
             this.sprGirdCantBuildState = ResourceLoader.getInstance().loadRes<Sprite>("Pictures/NormalMordel/Game/cantBuild");
-
-
             this.loadMapGrid();
         }
 
@@ -75,6 +73,11 @@ namespace ETModel
                     this.gridPointList[x, y].startGame();
                 }
             }
+        }
+
+        public override void clearGameInfo()
+        {
+            base.clearGameInfo();
         }
 
     }

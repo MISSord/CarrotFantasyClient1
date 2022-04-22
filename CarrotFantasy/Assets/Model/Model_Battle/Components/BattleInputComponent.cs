@@ -56,5 +56,17 @@ namespace ETModel
         {
             this.curNoProcessDic.Add(order);
         }
+
+        public override void clearInfo()
+        {
+            this.curNoProcessDic.Clear();
+            this.shouldRemoveList.Clear();
+        }
+
+        public override void dispose()
+        {
+            this.clearInfo();
+            base.dispose();
+        }
     }
 }

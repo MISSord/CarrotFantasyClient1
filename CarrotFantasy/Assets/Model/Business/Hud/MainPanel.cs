@@ -133,8 +133,7 @@ namespace ETModel
         public void exitGame()
         {
             UIServer.getInstance().playButtonEffect();
-            //GameManager.Instance.playerManager.SaveData();
-            Application.Quit();
+            Business.getInstance().eventDispatcher.dispatchEvent(CommonEventType.GAME_QUIT);
         }
 
         protected override void OnDestroy()

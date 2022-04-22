@@ -616,7 +616,7 @@
   "roundInfo": 
   [
     { "mMonsterIDList": [ 1, 1, 1, 1, 1 ] },
-    { "mMonsterIDList": [ 1, 1, 2, 2, 2, 2, 2, 3, 3 ] },
-    { "mMonsterIDList": [ 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3 ] },
+    { "mMonsterIDList": [ 1, 1, 2, 2, 2, 2, 2 ] },
+    { "mMonsterIDList": [ 1, 1, 2, 2, 2, 2, 2, 3, 3] },
     { "mMonsterIDList": [ 12, 12, 12 ] }
   ]}

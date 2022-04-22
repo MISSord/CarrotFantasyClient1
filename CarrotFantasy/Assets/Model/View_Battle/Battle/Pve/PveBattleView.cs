@@ -23,10 +23,15 @@ namespace ETModel
             this.addComponent(new BVMonsterComponent(this));
             this.addComponent(new BVTowerComponent(this));
             this.addComponent(new BVBulletComponent(this));
+            this.addComponent(new BVItemComponent(this));
             this.addComponent(new BVUIComponent(this));
         }
 
-
+        public override void clearGameInfo()
+        {
+            base.clearGameInfo();
+            GameViewObjectPool.getInstance().clearGameInfo();
+        }
 
     }
 }

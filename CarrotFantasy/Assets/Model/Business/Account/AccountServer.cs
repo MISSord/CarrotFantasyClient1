@@ -94,7 +94,7 @@ namespace ETModel
             //判断Realm服务器返回结果
             if (messageRealm.Error == ErrorCode.ERR_AccountOrPasswordError)
             {
-                Server.panelServer.showTip("登录失败,账号或密码错误");
+                UIServer.getInstance().showTip("登录失败,账号或密码错误");
                 return;
             }
             this.setAccountId(this.account);
@@ -107,18 +107,18 @@ namespace ETModel
             A0001_Register_R2C messageRealm = (A0001_Register_R2C)message;
             if (messageRealm.Error == ErrorCode.ERR_AccountAlreadyRegisted)
             {
-                Server.panelServer.showTip("注册失败，账号已被注册");
+                UIServer.getInstance().showTip("注册失败，账号已被注册");
                 return;
             }
 
             if (messageRealm.Error == ErrorCode.ERR_RepeatedAccountExist)
             {
-                Server.panelServer.showTip("注册失败，出现重复账号");
+                UIServer.getInstance().showTip("注册失败，出现重复账号");
                 return;
             }
 
             //显示登录成功的提示
-            Server.panelServer.showTip("注册成功");
+            UIServer.getInstance().showTip("注册成功");
         }
 
         private void notifyLoginGate(IMessage message)
@@ -126,7 +126,7 @@ namespace ETModel
             A0003_LoginGate_G2C msg = (A0003_LoginGate_G2C)message;
             this.userId = msg.UserID;
             this.eventDispatcher.dispatchEvent(LOGIN_SUCCESS);
-            Server.panelServer.showTip("登录成功,祝你游玩愉快");
+            UIServer.getInstance().showTip("登录成功,祝你游玩愉快");
         }
     }
 }

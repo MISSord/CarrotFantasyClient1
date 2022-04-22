@@ -180,11 +180,11 @@
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnit_Tower.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\BattleUnitProperty.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\Components\BaseUnitComponent.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Unit\Components\Move\UnitMoveComponent_Bullet.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Unit\Components\Move\UnitMoveComponent_Bullet_One.cs" />
+    <Compile Include="Assets\Model\Model_Battle\Unit\Components\Move\UnitMoveComponent_Monster.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitBeHitComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitBuffComponent.cs" />
-    <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitMoveComponent.cs" />
-    <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitMoveComponent_Bullet.cs" />
-    <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitMoveComponent_Monster.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitStatusComponent.cs" />
     <Compile Include="Assets\Model\Model_Battle\Unit\Components\UnitTransformComponent.cs" />
     <Compile Include="Assets\Model\Module\AssetsBundle\AssetsBundleLoaderAsync.cs" />
@@ -256,6 +256,7 @@
     <Compile Include="Assets\Model\View_Battle\Class\ButtonTower.cs" />
     <Compile Include="Assets\Model\View_Battle\Class\Carrot.cs" />
     <Compile Include="Assets\Model\View_Battle\Class\GridPoint.cs" />
+    <Compile Include="Assets\Model\View_Battle\Class\Item.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BaseBattleViewComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BVBullComponent.cs" />
     <Compile Include="Assets\Model\View_Battle\Components\BVItemComponent.cs" />

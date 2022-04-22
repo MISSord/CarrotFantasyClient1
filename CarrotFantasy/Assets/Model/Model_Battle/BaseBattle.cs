@@ -118,12 +118,15 @@ namespace ETModel
             this.stateMachine.setCurrentState(BattleStateType.START_GAME);
         }
 
-        public virtual void ClearGameInfo()
+        public virtual void clearGameInfo()
         {
-            for (int i = componentList.Count - 1; i >= 0; i++)
+            this.stateMachine.clearGameInfo();
+            for (int i = componentList.Count - 1; i >= 0; i--)
             {
-                componentList[i].clearInfo();
+                this.componentList[i].clearInfo();
             }
+            this.componentDic.Clear();
+            this.componentList.Clear();
             this.isStart = false;
             this.isDoulbSpeed = false;
             this.isPause = false;
@@ -135,7 +138,14 @@ namespace ETModel
 
         protected virtual void pauseTheGame()
         {
-            this.isPause = !this.isPause;
+            this.isPause = true;
+            this.eventDispatcher.dispatchEvent<bool>(BattleEvent.GAME_STATE_CHANGE, this.isPause);
+        }
+
+        protected virtual void goOnTheGame()
+        {
+            this.isPause = false;
+            this.eventDispatcher.dispatchEvent<bool>(BattleEvent.GAME_STATE_CHANGE, this.isPause);
         }
 
         public int getUid()

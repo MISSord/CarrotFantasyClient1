@@ -25,6 +25,7 @@ namespace ETModel
         /// </summary>
         public static readonly Fix64 DegreeToRad = (Fix64)0.0174532926175743341445922852m;
         public static readonly Fix64 Pi = new Fix64(PI);
+        public static readonly Fix64 Semicircle = new Fix64(180);
         public static readonly Fix64 PiOver2 = new Fix64(PI_OVER_2);
         public static readonly Fix64 PiTimes2 = new Fix64(PI_TIMES_2);
         public static readonly Fix64 PiInv = (Fix64)0.3183098861837906715377675267M;

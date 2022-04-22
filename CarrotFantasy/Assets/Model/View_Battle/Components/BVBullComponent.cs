@@ -106,5 +106,11 @@ namespace ETModel
             this.bulletDic.Clear();
             this.removeListener();
         }
+
+        public override void dispose()
+        {
+            this.clearGameInfo();
+            base.dispose();
+        }
     }
 }

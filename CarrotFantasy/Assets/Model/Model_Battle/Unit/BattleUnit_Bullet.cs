@@ -19,7 +19,7 @@ namespace ETModel
         public UnitTransformComponent tranComponent;
         public UnitBeHitComponent beHitComponent;
 
-        private Fix64Vector2 target;
+        private BattleUnit target;
 
         public BattleUnit_Bullet(BaseBattle battle) : base(battle)
         {
@@ -33,7 +33,7 @@ namespace ETModel
             this.moveSpeed = this.birthParam["moveSpeed"];
         }
 
-        public void loadInfo2(BattleUnit_Tower tower, Fix64Vector2 target)
+        public void loadInfo2(BattleUnit_Tower tower, BattleUnit target)
         {
             this.towerId = tower.towerID;
             this.towerLevel = tower.curLevel;
@@ -42,11 +42,23 @@ namespace ETModel
 
         public override void init()
         {
-            this.moveComponent = GameObjectPool.getInstance().getNewUnitComponent<UnitMoveComponent_Bullet>(UnitComponentType.MOVE_BULLET);
-            if (this.moveComponent == null)
+            if(this.towerId == 4)
             {
-                this.moveComponent = new UnitMoveComponent_Bullet();
+                this.moveComponent = GameObjectPool.getInstance().getNewUnitComponent<UnitMoveComponent_Bullet>(UnitComponentType.MOVE_BULLET);
+                if (this.moveComponent == null)
+                {
+                    this.moveComponent = new UnitMoveComponent_Bullet();
+                }
             }
+            else
+            {
+                this.moveComponent = GameObjectPool.getInstance().getNewUnitComponent<UnitMoveComponent_Bullet_One>(UnitComponentType.MOVE_BULLET_ONE);
+                if (this.moveComponent == null)
+                {
+                    this.moveComponent = new UnitMoveComponent_Bullet_One();
+                }
+            }
+            
             this.tranComponent = GameObjectPool.getInstance().getNewUnitComponent<UnitTransformComponent>(UnitComponentType.TRANSFORM);
             if (this.tranComponent == null)
             {
@@ -74,12 +86,14 @@ namespace ETModel
 
         private void beHitCallBack(BattleUnit unit)
         {
-            if (unit.unitType.Equals(BattleUnitType.MONSTER) == false) return;
-            Debug.Log("碰到怪兽了");
-            if(this.birthParam["isRemove"] == Fix64.Zero)
+            if (unit.unitType.Equals(BattleUnitType.MONSTER) == true || unit.unitType.Equals(BattleUnitType.ITEM) == true)
             {
-                this.eventDipatcher.dispatchEvent<BattleUnit_Bullet>(BattleEvent.BULLET_REMOVE, this);
+                if (this.birthParam["isRemove"] == Fix64.Zero)
+                {
+                    this.eventDipatcher.dispatchEvent<BattleUnit_Bullet>(BattleEvent.BULLET_REMOVE, this);
+                }
             }
+
         }
 
         public override void onTick(Fix64 deltaTime)

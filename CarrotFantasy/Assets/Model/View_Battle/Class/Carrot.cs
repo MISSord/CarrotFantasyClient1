@@ -25,7 +25,7 @@ namespace ETModel
         private BattleDataComponent dataComponent;
 
         // Use this for initialization
-        void Start()
+        public void init()
         {
             sprites = new Sprite[7];
             for (int i = 0; i < sprites.Length; i++)
