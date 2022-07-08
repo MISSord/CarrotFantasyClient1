@@ -10,4 +10,4 @@
 
 效果展示  
 
-Github_pic/Fight.png
+https://github.com/MISSord/CarrotFantasyClient1/blob/5368667e8747d59e91cc843e8744dc43c3aae627/Github_pic/Login.png
