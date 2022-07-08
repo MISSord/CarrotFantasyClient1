@@ -10,4 +10,7 @@
 
 效果展示  
 
-https://github.com/MISSord/CarrotFantasyClient1/blob/5368667e8747d59e91cc843e8744dc43c3aae627/Github_pic/Login.png
+![image](Github_pic/Login.png)
+![image](Github_pic/mainPanel1.png)
+![image](Github_pic/Fight1.png)
+![image](Github_pic/Final.png)
